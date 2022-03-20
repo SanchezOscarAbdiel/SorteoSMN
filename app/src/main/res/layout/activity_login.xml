@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".Login">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="269dp"
+        android:layout_height="283dp"
+        android:layout_marginStart="83dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="59dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/usuario__1_" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="85dp"
+        android:text="SΘરτεΘ SMN"
+        android:textColor="#7A9F35"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.361" />
+
+    <LinearLayout
+        android:layout_width="338dp"
+        android:layout_height="174dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="44dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/id_user"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/fondo_edditext"
+            android:drawableStart="@drawable/usuario__3_"
+            android:ems="10"
+            android:hint=" Usuario"
+            android:inputType="textPersonName"
+
+            android:textColorHint="#8C8A8A" />
+
+        <EditText
+            android:id="@+id/id_contra"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/fondo_edditext"
+            android:drawableStart="@drawable/contrasena"
+            android:ems="10"
+            android:hint=" Contraseña"
+            android:inputType="textPassword"
+            android:textColorHint="#8C8A8A" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#7A9F35"
+            android:text="Iniciar Sesión"
+            android:textColor="@color/black"
+            app:cornerRadius="20dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="27dp"
+        android:onClick="pasaV2"
+        android:text="->"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
