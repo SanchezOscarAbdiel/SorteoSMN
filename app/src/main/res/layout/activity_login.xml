@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/usuario__1_" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/TSorteo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
@@ -74,7 +74,7 @@
             android:textColorHint="#8C8A8A" />
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/biniciar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#7A9F35"
@@ -83,11 +83,11 @@
             app:cornerRadius="20dp" />
 
         <Button
-            android:id="@+id/button25"
+            android:id="@+id/bregistrar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#7A9F35"
-            android:text="Iniciar Sesión"
+            android:text="Registrarse"
             android:textColor="@color/black"
             app:cornerRadius="20dp" />
 
@@ -102,7 +102,7 @@
         android:onClick="pasaV2"
         android:text="->"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/TSorteo" />
 
     <TextView
         android:id="@+id/tvConexion"

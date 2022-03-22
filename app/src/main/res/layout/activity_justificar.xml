@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton3"
+            android:id="@+id/binfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="26dp"
@@ -48,7 +48,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <EditText
-                android:id="@+id/editTextTextPersonName24"
+                android:id="@+id/Edoc1"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="@drawable/eddit_blanco"
@@ -64,7 +64,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button9"
+                    android:id="@+id/benviar1"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#355000"
@@ -87,7 +87,7 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/editTextTextPersonName25"
+                android:id="@+id/Edoc2"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="@drawable/eddit_blanco"
@@ -103,7 +103,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button10"
+                    android:id="@+id/benviar2"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#355000"
@@ -127,7 +127,7 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/editTextTextPersonName26"
+                android:id="@+id/Edoc3"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="@drawable/eddit_blanco"
@@ -143,7 +143,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button11"
+                    android:id="@+id/benviar3"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#355000"
@@ -166,7 +166,7 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/editTextTextPersonName27"
+                android:id="@+id/Edoc4"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="@drawable/eddit_blanco"
@@ -182,7 +182,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button12"
+                    android:id="@+id/benviar4"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#355000"
@@ -247,7 +247,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView25"
+            android:id="@+id/tjust"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="57dp"
