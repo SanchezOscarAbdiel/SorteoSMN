@@ -44,13 +44,14 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName2"
+                    android:id="@+id/etNombre"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/textView19"
@@ -60,7 +61,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName9"
+                    android:id="@+id/etApellidoP"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -76,7 +77,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName10"
+                    android:id="@+id/etApellidoM"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -92,7 +93,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName11"
+                    android:id="@+id/etCurp"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -108,7 +109,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName12"
+                    android:id="@+id/etEdad"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -124,7 +125,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName13"
+                    android:id="@+id/etNumExt"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -140,7 +141,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName14"
+                    android:id="@+id/etNumInt"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -156,7 +157,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName15"
+                    android:id="@+id/etCalle"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -171,14 +172,10 @@
                     android:text="Colonia:"
                     android:textColor="#FDFCFC" />
 
-                <EditText
-                    android:id="@+id/editTextTextPersonName16"
+                <Spinner
+                    android:id="@+id/spColonia"
                     android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:background="@drawable/fondo_edditext"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:visibility="visible" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/textView13"
@@ -188,7 +185,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName17"
+                    android:id="@+id/etCiudad"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -204,7 +201,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName18"
+                    android:id="@+id/etEstadoCivil"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -220,7 +217,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName19"
+                    android:id="@+id/etProfesion"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -240,14 +237,14 @@
                     android:layout_height="match_parent">
 
                     <RadioButton
-                        android:id="@+id/radioButton"
+                        android:id="@+id/rbMasculino"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="(M) Macho"
+                        android:text="(M) Masculino"
                         android:textColor="#FFFFFF" />
 
                     <RadioButton
-                        android:id="@+id/radioButton2"
+                        android:id="@+id/rbFemenino"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="(F) Femenino "
@@ -262,7 +259,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName21"
+                    android:id="@+id/etDiscapacidad"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
@@ -278,7 +275,7 @@
                     android:textColor="#FDFCFC" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName22"
+                    android:id="@+id/etCorreo"
                     android:layout_width="match_parent"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"

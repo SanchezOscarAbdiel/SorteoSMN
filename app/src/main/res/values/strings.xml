@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SorteoSMN</string>
+    <string-array name="spColonia"></string-array>
 </resources>
