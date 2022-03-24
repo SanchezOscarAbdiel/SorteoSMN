@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="combo_Estado">
+        <item>SELECCIONE</item>
+        <item>Soltero</item>
+        <item>Casado</item>
+        <item>Concubinato</item>
+        <item>Viudo</item>
+    </string-array>
+</resources>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,39 +38,15 @@ public class Registro extends AppCompatActivity {
     private static final String url = "http://localhost:3306/android.save.php";
 // ------------------------------------------------------------------------------
     private Spinner spinner;
+    public Spinner spEstadoc;
+    TextView estado;
 // ------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        requestQueue = Volley.newRequestQueue(this);
-        Spinner spinner = (Spinner) findViewById(R.id.spColonia);
 
-        List<String> spin = new ArrayList<String>();
-        String linea = null;
-
-        InputStream is =this.getResources().openRawResource(R.raw.colonias);
-        BufferedReader reader =new BufferedReader(new InputStreamReader(is));
-        if (is!=null){
-            while (true){
-                try {
-                    if (!((linea=reader.readLine())!=null)) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                spin.add(linea.split(",")[0]);
-            }
-        }
-        try {
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String datos[] = spin.toArray(new String[spin.size()]);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, datos);
-        spinner.setAdapter(adapter);
 
     }
 
@@ -127,4 +104,40 @@ public class Registro extends AppCompatActivity {
         Intent v1 =new Intent(this,sorteo.class);
         startActivity(v1);
     }
+    public void spinnercolonia()throws IOException{////////////Revisa que si funcione el spinner de colonia /////////////
+        requestQueue = Volley.newRequestQueue(this);
+        Spinner spinner = (Spinner) findViewById(R.id.spColonia);
+
+        List<String> spin = new ArrayList<String>();
+        String linea = null;
+
+        InputStream is =this.getResources().openRawResource(R.raw.colonias);
+        BufferedReader reader =new BufferedReader(new InputStreamReader(is));
+        if (is!=null){
+            while (true){
+                try {
+                    if (!((linea=reader.readLine())!=null)) break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                spin.add(linea.split(",")[0]);
+            }
+        }
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String datos[] = spin.toArray(new String[spin.size()]);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, datos);
+        spinner.setAdapter(adapter);
+    }
+    public void spinnerestado()throws IOException{
+        spEstadoc=(Spinner) findViewById(R.id.spEstadoc);
+        ArrayAdapter<CharSequence>adapter=ArrayAdapter.createFromResource(this,R.array.combo_Estado, android.R.layout.simple_spinner_item);
+
+        spEstadoc.setAdapter(adapter);
+    }
+
 }
