@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity{
 
     //========================================================================
     public void pasaV2 (View view) {
-        Intent v1 =new Intent(this,MainActivity.class);
+        Intent v1 =new Intent(this,Registro.class);
         startActivity(v1);
     }
 }
