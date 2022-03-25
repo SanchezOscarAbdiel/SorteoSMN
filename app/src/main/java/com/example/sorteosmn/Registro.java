@@ -36,14 +36,14 @@ public class Registro extends AppCompatActivity {
 
     //------------------------------------------------------------------------------
     RequestQueue requestQueue;
-    private static final String url = "http://localhost:3306/android.save.php";
+    public static final String url = "http://192.168.56.1/android/save.php";
 // ------------------------------------------------------------------------------
-    private Spinner spinner;
+    public Spinner spinner;
     public Spinner spEstadoc;
-    public RadioGroup sexo; public RadioButton Masculino, Femenino;
-    EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Discapacidad,Correo;
-    String Nombre1,ApellidoP1,ApellidoM1,Curp1,Edad1,NumEx1,NumIn1,Calle1,Colonia1,Ciudad1,EstadoCivil1,Profesion1,Sexo2,Discapacidad1,Correo1;
-    int Sexo1;
+    public RadioGroup Sexo; public RadioButton Masculino, Femenino;
+   public static EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Discapacidad,Correo;
+    public static String edad,nombre,apellidop,apellidom,curp,num_ext,num_int,calle,colonia,ciudad,estado_civ,profesion,sexo,discapacidad,correo;
+  public static  int Sexo1;
 // ------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -52,9 +52,9 @@ public class Registro extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spColonia);
+
         spEstadoc=(Spinner) findViewById(R.id.spEstadoc);
-        sexo=(RadioGroup) findViewById(R.id.rgSexo);
+        Sexo=(RadioGroup) findViewById(R.id.rgSexo);
         Nombre = (EditText)findViewById(R.id.etNombre);
         ApellidoP = (EditText)findViewById(R.id.etApellidoP);
         ApellidoM = (EditText)findViewById(R.id.etApellidoM);
@@ -68,36 +68,15 @@ public class Registro extends AppCompatActivity {
         Discapacidad= (EditText)findViewById(R.id.etDiscapacidad);
         Correo= (EditText)findViewById(R.id.etCorreo);
 
-        Nombre1 = Nombre.getText().toString();
-        ApellidoP1=ApellidoP.getText().toString();
-        ApellidoM1 = ApellidoM.getText().toString();
-        Curp1 = Curp.getText().toString();
-        Edad1 = Edad.getText().toString();
-        NumEx1 = NumEx.getText().toString();
-        NumIn1 = NumIn.getText().toString();
-        Calle1 = Calle.getText().toString();
-        Colonia1 = spinner.getSelectedItem().toString();
-        Ciudad1 = Ciudad.getText().toString();
-        EstadoCivil1 = spEstadoc.getSelectedItem().toString();
-        Profesion1=Profesion.getText().toString();
-        Sexo1 = sexo.getCheckedRadioButtonId();
-        Masculino = findViewById(Sexo1);
-        Sexo2 = Masculino.getText().toString();
-        if(Sexo2 == "(M) Masculino")
-            Sexo2 = "M";
-        else
-            Sexo2 = "F";
-        Discapacidad1 = Discapacidad.getText().toString();
-        Correo1 = Correo.getText().toString();
-
        colonia(null);
        EstadoCivil(null);
 
     }
 
 public void colonia (String xd){
-    requestQueue = Volley.newRequestQueue(this);
 
+    requestQueue = Volley.newRequestQueue(this);
+    spinner = (Spinner) findViewById(R.id.spColonia);
 
     List<String> spin = new ArrayList<String>();
     String linea = null;
@@ -137,19 +116,43 @@ public void colonia (String xd){
     //==================================================================================
     public void createUser(View view){
 
+        nombre = Nombre.getText().toString();
+        apellidop=ApellidoP.getText().toString();
+        apellidom = ApellidoM.getText().toString();
+        curp = Curp.getText().toString();
+        edad = Edad.getText().toString();
+        num_ext = NumEx.getText().toString();
+        num_int = NumIn.getText().toString();
+        calle = Calle.getText().toString();
+        colonia = spinner.getSelectedItem().toString();
+        ciudad = Ciudad.getText().toString();
+        estado_civ = spEstadoc.getSelectedItem().toString();
+        profesion=Profesion.getText().toString();
+        Sexo1 = Sexo.getCheckedRadioButtonId();
+        Masculino = findViewById(Sexo1);
+        sexo = Masculino.getText().toString();
+        if(sexo == "(M) Masculino")
+            sexo = "F";
+        else
+            sexo = "M";
+        discapacidad = Discapacidad.getText().toString();
+        correo = Correo.getText().toString();
+
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(Registro.this, "correct", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Registro.this, "correct", Toast.LENGTH_LONG).show();
+                        System.out.println("response "+response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(Registro.this, "ya valio", Toast.LENGTH_LONG).show();
+                        System.out.println("error "+error);
                     }
                 }
         ){
@@ -157,21 +160,23 @@ public void colonia (String xd){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("nombre", Nombre1);
-                params.put("apellidop", ApellidoP1);
-                params.put("apellidom", ApellidoM1);
-                params.put("curp", Curp1);
-                params.put("edad", Edad1);
-                params.put("num_ext", NumEx1);
-                params.put("num_int", NumIn1);
-                params.put("calle", Calle1);
-                params.put("colonia", Colonia1);
-                params.put("ciudad", Ciudad1);
-                params.put("estado_civ", EstadoCivil1);
-                params.put("profesion", Profesion1);
-                params.put("sexo", Sexo2);
-                params.put("discapacidad", Discapacidad1);
-                params.put("correo", Correo1);
+
+                params.put("nombre", nombre);
+                params.put("apellidop", apellidom);
+                params.put("apellidom", apellidom);
+                params.put("curp", curp);
+                params.put("edad", edad);
+                params.put("num_ext", num_ext);
+                params.put("num_int", num_int);
+                params.put("calle", calle);
+                params.put("colonia", colonia);
+                params.put("ciudad", ciudad);
+                params.put("estado_civ", estado_civ);
+                params.put("profesion", profesion);
+                params.put("sexo", sexo);
+                params.put("discapacidad", discapacidad);
+                params.put("correo", correo);
+                System.out.println("hola "+nombre+" "+apellidop+" "+apellidom+" "+curp+" "+edad+" "+num_ext+" "+num_int+" "+calle+" "+colonia+" "+ciudad+" "+estado_civ+" "+profesion+" "+sexo+" "+discapacidad+" "+correo);
                 return params;
             }
         };
