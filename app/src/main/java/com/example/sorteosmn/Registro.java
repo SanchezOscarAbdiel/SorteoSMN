@@ -1,8 +1,10 @@
 package com.example.sorteosmn;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,13 +21,18 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,16 +43,17 @@ public class Registro extends AppCompatActivity {
 
     //------------------------------------------------------------------------------
     RequestQueue requestQueue;
-    public static final String url = "http://192.168.56.1/android/save.php";
+    public static final String url = "http://192.168.56.1/android/save.php"; // hay que cambiar la ip
 // ------------------------------------------------------------------------------
     public Spinner spinner;
     public Spinner spEstadoc;
-    public Spinner sptdiscap;
-    public Spinner spciudad;
+    public Spinner Discapacidad;
+
     public RadioGroup Sexo; public RadioButton Masculino, Femenino;
-   public static EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Discapacidad,Correo;
+   public static EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Correo;
     public static String edad,nombre,apellidop,apellidom,curp,num_ext,num_int,calle,colonia,ciudad,estado_civ,profesion,sexo,discapacidad,correo;
   public static  int Sexo1;
+    public static String matricula1, curp1; //variables consultas
 // ------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -53,7 +61,6 @@ public class Registro extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
 
         requestQueue = Volley.newRequestQueue(this);
-
 
         spEstadoc=(Spinner) findViewById(R.id.spEstadoc);
         Sexo=(RadioGroup) findViewById(R.id.rgSexo);
@@ -67,55 +74,60 @@ public class Registro extends AppCompatActivity {
         Calle = (EditText)findViewById(R.id.etCalle);
         Ciudad = (EditText)findViewById(R.id.etCiudad);
         Profesion= (EditText)findViewById(R.id.etProfesion);
-        Discapacidad= (EditText)findViewById(R.id.etDiscapacidad);
+        Discapacidad= (Spinner) findViewById(R.id.spdiscapacidad);
         Correo= (EditText)findViewById(R.id.etCorreo);
 
+        //--------------------LLAMA LLENADO DE SPINNERS
        colonia(null);
        EstadoCivil(null);
-
+       Discapacidad(null);
     }
 
-public void colonia (String xd){
+    //======================INGRESO DATOS A SPINNERS==========================
 
-    requestQueue = Volley.newRequestQueue(this);
-    spinner = (Spinner) findViewById(R.id.spColonia);
+    public void colonia (String xd){
 
-    List<String> spin = new ArrayList<String>();
-    String linea = null;
+        requestQueue = Volley.newRequestQueue(this);
+        spinner = (Spinner) findViewById(R.id.spColonia);
 
-    InputStream is =this.getResources().openRawResource(R.raw.colonias);
-    BufferedReader reader =new BufferedReader(new InputStreamReader(is));
-    if (is!=null){
-        while (true){
-            try {
-                if (!((linea=reader.readLine())!=null)) break;
-            } catch (IOException e) {
-                e.printStackTrace();
+        List<String> spin = new ArrayList<String>();
+        String linea = null;
+
+        InputStream is =this.getResources().openRawResource(R.raw.colonias);
+        BufferedReader reader =new BufferedReader(new InputStreamReader(is));
+        if (is!=null){
+            while (true){
+                try {
+                    if (!((linea=reader.readLine())!=null)) break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                spin.add(linea.split(",")[0]);
             }
-            spin.add(linea.split(",")[0]);
         }
-    }
-    try {
-        is.close();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    String datos[] = spin.toArray(new String[spin.size()]);
-    ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, datos);
-    spinner.setAdapter(adapter);
+        String datos[] = spin.toArray(new String[spin.size()]);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, datos);
+        spinner.setAdapter(adapter);
 
-}
-    //==================================================================================
+    }
 
     public void EstadoCivil(String xd){
-
         ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_Estado, android.R.layout.simple_spinner_item);
-
         spEstadoc.setAdapter(adapterE);
     }
 
-    //==================================================================================
+    public void Discapacidad(String xd){
+        ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_discapacidad, android.R.layout.simple_spinner_item);
+        Discapacidad.setAdapter(adapterE);
+    }
+
+    //===========================INSERCIO EN BASE DE DATOS=====================================
     public void createUser(View view){
 
         nombre = Nombre.getText().toString();
@@ -137,7 +149,7 @@ public void colonia (String xd){
             sexo = "F";
         else
             sexo = "M";
-        discapacidad = Discapacidad.getText().toString();
+        discapacidad = Discapacidad.getSelectedItem().toString();
         correo = Correo.getText().toString();
 
         StringRequest stringRequest = new StringRequest(
@@ -148,12 +160,15 @@ public void colonia (String xd){
                     public void onResponse(String response) {
                         Toast.makeText(Registro.this, "correct", Toast.LENGTH_LONG).show();
                         System.out.println("response "+response);
+
+                        ReadUser(null);
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Registro.this, "ya valio", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Registro.this, "Revise sus datos.", Toast.LENGTH_LONG).show();
                         System.out.println("error "+error);
                     }
                 }
@@ -183,24 +198,65 @@ public void colonia (String xd){
             }
         };
         requestQueue.add(stringRequest);
+//----------------------------------consulta
 
+
+    }
+
+    public void PopUp(String bola){
+        AlertDialog.Builder alerta = new AlertDialog.Builder(Registro.this);
+        alerta.setMessage("Felicidades, usted es bola: "+bola+"\nCon ID: "+matricula1+"\nSerá dirigido a su hoja de datos.").setCancelable(false)
+                .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog titulo = alerta.create();
+        titulo.setTitle("SORTEO");
+        titulo.show();
+    }
+
+
+    public void ReadUser(String xd){
+        System.out.println("curpsss"+curp);
+        String url1 = "http://192.168.56.1/android/fetch.php?curp=jijija";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, url1, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+
+                try {
+                    System.out.println("response111"+response);
+                    curp1 = response.getString("CURP_Enc");
+                    matricula1 = response.getString("Matricula_Enc");
+
+                    System.out.println("matricula111 "+matricula1);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    System.out.println("errrror"+e);
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("errrror1 "+ error);
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
     }
     // ------------------------------------------------------------------------------
     public void pasaV6 (View view) {
-        Intent v1 =new Intent(this,sorteo.class);
-        startActivity(v1);
-    }
-    public void Discapacidad(String xd){
+       // Intent v1 =new Intent(this,sorteo.class);
+        //startActivity(v1);
 
-        ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_discapacidad, android.R.layout.simple_spinner_item);
 
-        sptdiscap.setAdapter(adapterE);
     }
 
-    public void ciudad(String xd){
 
-        ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_ciudad, android.R.layout.simple_spinner_item);
 
-        spciudad.setAdapter(adapterE);
-    }
 }
