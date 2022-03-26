@@ -184,15 +184,10 @@
                     android:text="Ciudad:"
                     android:textColor="#FDFCFC" />
 
-                <EditText
-                    android:id="@+id/etCiudad"
+                <Spinner
+                    android:id="@+id/spciudad"
                     android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:background="@drawable/fondo_edditext"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:visibility="visible" />
-
+                    android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/textView14"
                     android:layout_width="match_parent"
@@ -255,14 +250,11 @@
                     android:text="Discapacidad"
                     android:textColor="#FDFCFC" />
 
-                <EditText
-                    android:id="@+id/etDiscapacidad"
+                <Spinner
+                    android:id="@+id/spdiscapacidad"
                     android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:background="@drawable/fondo_edditext"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:visibility="visible" />
+                    android:layout_height="wrap_content" />
+
 
                 <TextView
                     android:id="@+id/textView18"

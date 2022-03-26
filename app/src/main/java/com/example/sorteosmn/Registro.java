@@ -40,6 +40,8 @@ public class Registro extends AppCompatActivity {
 // ------------------------------------------------------------------------------
     public Spinner spinner;
     public Spinner spEstadoc;
+    public Spinner sptdiscap;
+    public Spinner spciudad;
     public RadioGroup Sexo; public RadioButton Masculino, Femenino;
    public static EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Discapacidad,Correo;
     public static String edad,nombre,apellidop,apellidom,curp,num_ext,num_int,calle,colonia,ciudad,estado_civ,profesion,sexo,discapacidad,correo;
@@ -188,6 +190,17 @@ public void colonia (String xd){
         Intent v1 =new Intent(this,sorteo.class);
         startActivity(v1);
     }
+    public void Discapacidad(String xd){
 
+        ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_discapacidad, android.R.layout.simple_spinner_item);
 
+        sptdiscap.setAdapter(adapterE);
+    }
+
+    public void ciudad(String xd){
+
+        ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_ciudad, android.R.layout.simple_spinner_item);
+
+        spciudad.setAdapter(adapterE);
+    }
 }

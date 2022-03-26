@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="combo_ciudad">
+        <item>SELECCIONE</item>
+        <item>San Juan del Rio</item>
+        <item>otro</item>
+    </string-array>
+</resources>

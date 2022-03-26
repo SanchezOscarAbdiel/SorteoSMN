@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="combo_discapacidad">
+        <item>SELECCIONE</item>
+        <item>N/A</item>
+        <item>Fisica</item>
+        <item>Auditiva</item>
+        <item>Sordoceguera</item>
+        <item>Intelectual</item>
+        <item>Psicosocial</item>
+        <item>Multiple</item>
+        <item>Otra</item>
+    </string-array>
+</resources>
