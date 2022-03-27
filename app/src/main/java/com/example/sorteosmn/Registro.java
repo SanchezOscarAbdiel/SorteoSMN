@@ -21,10 +21,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,10 +52,10 @@ public class Registro extends AppCompatActivity {
     public Spinner Discapacidad;
 
     public RadioGroup Sexo; public RadioButton Masculino, Femenino;
-   public static EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Correo;
+   public static EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Correo,Resultado;
     public static String edad,nombre,apellidop,apellidom,curp,num_ext,num_int,calle,colonia,ciudad,estado_civ,profesion,sexo,discapacidad,correo;
   public static  int Sexo1;
-    public static String matricula1, curp1; //variables consultas
+    public static String EnviaCurp,EnviaMatricula, Bola; //variables consultas
 // ------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -76,7 +78,7 @@ public class Registro extends AppCompatActivity {
         Profesion= (EditText)findViewById(R.id.etProfesion);
         Discapacidad= (Spinner) findViewById(R.id.spdiscapacidad);
         Correo= (EditText)findViewById(R.id.etCorreo);
-
+        Resultado =(EditText)findViewById(R.id.edResultado);
         //--------------------LLAMA LLENADO DE SPINNERS
        colonia(null);
        EstadoCivil(null);
@@ -161,7 +163,8 @@ public class Registro extends AppCompatActivity {
                         Toast.makeText(Registro.this, "correct", Toast.LENGTH_LONG).show();
                         System.out.println("response "+response);
 
-                        ReadUser(null);
+                        readUser(null);
+
 
                     }
                 },
@@ -205,11 +208,12 @@ public class Registro extends AppCompatActivity {
 
     public void PopUp(String bola){
         AlertDialog.Builder alerta = new AlertDialog.Builder(Registro.this);
-        alerta.setMessage("Felicidades, usted es bola: "+bola+"\nCon ID: "+matricula1+"\nSerá dirigido a su hoja de datos.").setCancelable(false)
+        alerta.setMessage("Felicidades, usted es bola: "+bola+"\nSerá dirigido a su hoja de datos.").setCancelable(false)
                 .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-                        dialog.cancel();
+                         pasaV6(null);
+                        //dialog.cancel();
                     }
                 });
 
@@ -218,45 +222,81 @@ public class Registro extends AppCompatActivity {
         titulo.show();
     }
 
+private void readUser (String xd){
+    String URL ="http://192.168.56.1/android/fetch1.php?curp="+curp;
+      JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
+          @Override
+          public void onResponse(JSONArray response) {
+              JSONObject jsonObject = null;
 
-    public void ReadUser(String xd){
-        System.out.println("curpsss"+curp);
-        String url1 = "http://192.168.56.1/android/fetch.php?curp=jijija";
+              for (int x = 0; x < response.length(); x++) {
+                  try {
+                      jsonObject = response.getJSONObject(x);
+                          Resultado.setText(jsonObject.getString("Matricula_Enc") + jsonObject.getString("CURP_Enc"));
+                          EnviaMatricula = jsonObject.getString("Matricula_Enc"); EnviaCurp = jsonObject.getString("CURP_Enc");
+                          System.out.println("Curp: "+EnviaCurp+" MATRICULA "+EnviaMatricula);
+
+                      PopUp("Blanca");
+
+                  } catch (JSONException e) {
+                      System.out.println("Error1 " + e.getMessage());
+                  } try{
+                      jsonObject = response.getJSONObject(x);
+                      Resultado.setText(jsonObject.getString("Matricula_Res") + jsonObject.getString("CURP_Res"));
+                      EnviaMatricula = jsonObject.getString("Matricula_Res"); EnviaCurp = jsonObject.getString("CURP_Res");
+                      System.out.println("Curp: "+EnviaCurp+" MATRICULA "+EnviaMatricula);
+
+                      PopUp("Negra");
+                  } catch(JSONException e) {
+                      System.out.println("Error2 " + e.getMessage());
+                  }
+              }
+          }
+      }, new Response.ErrorListener() {
+          @Override
+          public void onErrorResponse(VolleyError error) {
+              System.out.println("Error2 " + error.getMessage());
+          }
+      }
+      );
+      requestQueue=Volley.newRequestQueue(this);
+      requestQueue.add(jsonArrayRequest);
+}
+
+    private void ReadUser(String xd){
+        String URL ="http://192.168.56.1/android/fetch.php?curp=jijija";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, url1, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
+                Request.Method.GET,
+                URL,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String CURP_Enc,Matricula_Enc;
+                        try {
+                            CURP_Enc =  response.getString("CURP_Enc");
+                            Matricula_Enc = response.getString("Matricula_Enc");
 
-
-                try {
-                    System.out.println("response111"+response);
-                    curp1 = response.getString("CURP_Enc");
-                    matricula1 = response.getString("Matricula_Enc");
-
-                    System.out.println("matricula111 "+matricula1);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    System.out.println("errrror"+e);
-                }
-            }
-        },
+                            System.out.println(Matricula_Enc);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("errrror1 "+ error);
+                        System.out.println("errorss "+error);
                     }
                 }
         );
+
         requestQueue.add(jsonObjectRequest);
     }
     // ------------------------------------------------------------------------------
-    public void pasaV6 (View view) {
-       // Intent v1 =new Intent(this,sorteo.class);
-        //startActivity(v1);
-
-
+    public void pasaV6 (String xd) {
+       Intent v1 =new Intent(this,sorteo.class);
+        startActivity(v1);
     }
-
-
 
 }
