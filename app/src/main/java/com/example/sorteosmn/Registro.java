@@ -55,7 +55,8 @@ public class Registro extends AppCompatActivity {
    public static EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Correo,Resultado;
     public static String edad,nombre,apellidop,apellidom,curp,num_ext,num_int,calle,colonia,ciudad,estado_civ,profesion,sexo,discapacidad,correo;
   public static  int Sexo1;
-    public static String EnviaCurp,EnviaMatricula, Bola; //variables consultas
+    public static String EnviaCurp,EnviaMatricula; //variables consultas
+    Boolean Reserva = false;
 // ------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -235,7 +236,7 @@ private void readUser (String xd){
                           Resultado.setText(jsonObject.getString("Matricula_Enc") + jsonObject.getString("CURP_Enc"));
                           EnviaMatricula = jsonObject.getString("Matricula_Enc"); EnviaCurp = jsonObject.getString("CURP_Enc");
                           System.out.println("Curp: "+EnviaCurp+" MATRICULA "+EnviaMatricula);
-
+                        Reserva = false;
                       PopUp("Blanca");
 
                   } catch (JSONException e) {
@@ -245,7 +246,7 @@ private void readUser (String xd){
                       Resultado.setText(jsonObject.getString("Matricula_Res") + jsonObject.getString("CURP_Res"));
                       EnviaMatricula = jsonObject.getString("Matricula_Res"); EnviaCurp = jsonObject.getString("CURP_Res");
                       System.out.println("Curp: "+EnviaCurp+" MATRICULA "+EnviaMatricula);
-
+                      Reserva = true;
                       PopUp("Negra");
                   } catch(JSONException e) {
                       System.out.println("Error2 " + e.getMessage());

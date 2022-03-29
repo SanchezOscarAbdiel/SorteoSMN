@@ -25,7 +25,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView4">
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
+                android:id="@+id/etMatricula"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_weight="1"
@@ -37,7 +37,7 @@
                 android:textColor="#8C8A8A" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName4"
+                android:id="@+id/etLiberacion"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_weight="1"
@@ -84,7 +84,7 @@
                     android:textColor="#FFFFFF" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName5"
+                    android:id="@+id/etNombreS"
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
                     android:background="@drawable/fondo_edditext"
@@ -105,7 +105,7 @@
                     android:textColor="#FFFFFF" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName6"
+                    android:id="@+id/etApellidop"
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
                     android:background="@drawable/fondo_edditext"
@@ -126,7 +126,7 @@
                     android:textColor="#FFFFFF" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName7"
+                    android:id="@+id/etApellidom"
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
                     android:background="@drawable/fondo_edditext"
@@ -146,7 +146,7 @@
                     android:textColor="#FFFFFF" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName8"
+                    android:id="@+id/etResultado"
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
                     android:background="@drawable/fondo_edditext"
@@ -167,7 +167,7 @@
                     android:textColor="#FFFFFF" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName20"
+                    android:id="@+id/etTipoA"
                     android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
