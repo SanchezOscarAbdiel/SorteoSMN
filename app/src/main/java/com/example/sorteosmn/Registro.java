@@ -55,8 +55,8 @@ public class Registro extends AppCompatActivity {
    public static EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Correo,Resultado;
     public static String edad,nombre,apellidop,apellidom,curp,num_ext,num_int,calle,colonia,ciudad,estado_civ,profesion,sexo,discapacidad,correo;
   public static  int Sexo1;
-    public static String EnviaCurp,EnviaMatricula; //variables consultas
-    Boolean Reserva = false;
+    public static String EnviaCurp,EnviaMatricula,EnviaBola; //variables consultas
+    Boolean Reserva = true;
 // ------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -213,8 +213,9 @@ public class Registro extends AppCompatActivity {
                 .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
+                        EnviaBola = bola;
                          pasaV6(null);
-                        //dialog.cancel();
+
                     }
                 });
 
@@ -246,7 +247,7 @@ private void readUser (String xd){
                       Resultado.setText(jsonObject.getString("Matricula_Res") + jsonObject.getString("CURP_Res"));
                       EnviaMatricula = jsonObject.getString("Matricula_Res"); EnviaCurp = jsonObject.getString("CURP_Res");
                       System.out.println("Curp: "+EnviaCurp+" MATRICULA "+EnviaMatricula);
-                      Reserva = true;
+                      //Reserva = true;
                       PopUp("Negra");
                   } catch(JSONException e) {
                       System.out.println("Error2 " + e.getMessage());

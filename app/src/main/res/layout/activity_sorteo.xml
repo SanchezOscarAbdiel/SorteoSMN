@@ -34,7 +34,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="Matricula"
-                android:textColor="#8C8A8A" />
+                android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/etLiberacion"
@@ -46,7 +46,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="Num-Liberación"
-                android:textColor="#8C8A8A" />
+                android:textColor="#000000" />
         </LinearLayout>
 
         <ImageView
@@ -90,7 +90,8 @@
                     android:background="@drawable/fondo_edditext"
                     android:ems="10"
 
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textColor="#000000" />
             </TableRow>
 
             <TableRow
@@ -111,6 +112,7 @@
                     android:background="@drawable/fondo_edditext"
                     android:ems="10"
                     android:inputType="textPersonName"
+                    android:textColor="#000000"
                     tools:ignore="TouchTargetSizeCheck" />
             </TableRow>
 
@@ -131,7 +133,8 @@
                     android:layout_height="37dp"
                     android:background="@drawable/fondo_edditext"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textColor="#000000" />
             </TableRow>
 
             <TableRow
@@ -151,7 +154,8 @@
                     android:layout_height="37dp"
                     android:background="@drawable/fondo_edditext"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textColor="#000000" />
 
             </TableRow>
 
@@ -172,7 +176,8 @@
                     android:layout_height="39dp"
                     android:background="@drawable/fondo_edditext"
                     android:ems="10"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textColor="#000000" />
             </TableRow>
         </TableLayout>
 

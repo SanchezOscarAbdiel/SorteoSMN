@@ -34,6 +34,7 @@ public class sorteo extends AppCompatActivity {
     public static Registro objR = new Registro();
     public static Boolean res = objR.Reserva;
     public static EditText Matricula,NumLiberacion,Nombre,Apellidop,Apellidom,Resultado,TipoA;
+    public static String ConsultaMatricula;
     RequestQueue requestQueue;
 
     @Override
@@ -43,7 +44,9 @@ public class sorteo extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
+        System.out.println("res 1 "+res);
         if(res=true){
+            System.out.println("res 2 "+res);
             PopUpReserva();
         }
 
@@ -53,8 +56,12 @@ public class sorteo extends AppCompatActivity {
         Apellidop = (EditText)findViewById(R.id.etApellidop);
         Apellidom = (EditText)findViewById(R.id.etApellidom);
         TipoA = (EditText)findViewById(R.id.etTipoA);
+        Resultado =(EditText)findViewById(R.id.etResultado);
 
         readUser1(null); //muestra los datos en los campos
+        System.out.println("set bola "+objR.EnviaBola);
+        Resultado.setText("Bola "+objR.EnviaBola);
+        if(objR.EnviaBola == "Blanca"){TipoA.setText("Encuadrado");}else{TipoA.setText("Reserva");}
     }
 
     //====================================================
@@ -122,7 +129,7 @@ public class sorteo extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    String prueba;
+
     public void readUser1 (String xd) {
         String URL = "http://192.168.56.1/android/fetchsorteo.php?curp=" + objR.EnviaCurp;
         System.out.println("CURP "+objR.EnviaCurp);
@@ -139,8 +146,10 @@ public class sorteo extends AppCompatActivity {
                         Nombre.setText(jsonObject.getString("Nombres_Enc"));
                         Apellidop.setText(jsonObject.getString("ApellidoPat_Enc"));
                         Apellidom.setText(jsonObject.getString("ApellidoMat_Enc"));
-                        prueba = jsonObject.getString("Matricula_Enc");
-                        System.out.println("matricula1: "+prueba);
+                        ConsultaMatricula = jsonObject.getString("Matricula_Enc");
+                        System.out.println("matricula1: "+ConsultaMatricula);
+
+                        readUser2 (ConsultaMatricula);
 
 
                     } catch (JSONException e) {
@@ -159,6 +168,50 @@ public class sorteo extends AppCompatActivity {
                         System.out.println("Error2 " + e.getMessage());
                     }
                 }
+                readUser2 (ConsultaMatricula);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error2 " + error.getMessage());
+            }
+        }
+        );
+        requestQueue=Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public void readUser2 (String mat) {
+        String URL = "http://192.168.56.1/android/fetchsorteo2.php?matricula=" + mat;
+        System.out.println("CURP "+mat);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject = null;
+                System.out.println("response1: "+response);
+                for (int x = 0; x < response.length(); x++) {
+                    System.out.println("a ");
+                    try {
+                        jsonObject = response.getJSONObject(x);
+                        NumLiberacion.setText(jsonObject.getString("Num_Liberacion"));
+
+                        System.out.println("liberacion1: ");
+
+                    } catch (JSONException e) {
+                        System.out.println("Error1 " + e.getMessage());
+                    }
+                    try {
+                        jsonObject = response.getJSONObject(x);
+                        NumLiberacion.setText(jsonObject.getString("Num_Liberacion"));
+
+                        System.out.println("liberacion2: ");
+
+                    } catch (JSONException e) {
+                        System.out.println("Error2 " + e.getMessage());
+                    }
+                }
+                //String setBola =objR.EnviaBola;
+
             }
         }, new Response.ErrorListener() {
             @Override
