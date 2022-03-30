@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +42,10 @@ public class sorteo extends AppCompatActivity {
     public static EditText Matricula,NumLiberacion,Nombre,Apellidop,Apellidom,Resultado,TipoA;
     public static String ConsultaMatricula;
     RequestQueue requestQueue;
+    //-----------------------txt
+    public Button btSave;
+    public Button btnRead;
+    public static final String FILE_NAME = "Texto.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,98 @@ public class sorteo extends AppCompatActivity {
         System.out.println("set bola "+objR.EnviaBola);
         Resultado.setText("Bola "+objR.EnviaBola);
         if(objR.EnviaBola == "Blanca"){TipoA.setText("Encuadrado");}else{TipoA.setText("Reserva");}
+        ///------------------txt
+        setUpView();
+    }
+    //___________Txt-------------------//
+    private void setUpView() {
+        Matricula = (EditText)findViewById(R.id.etMatricula);
+        NumLiberacion = (EditText)findViewById(R.id.etLiberacion);
+        Nombre = (EditText)findViewById(R.id.etNombreS);
+        Apellidop = (EditText)findViewById(R.id.etApellidop);
+        Apellidom = (EditText)findViewById(R.id.etApellidom);
+        TipoA = (EditText)findViewById(R.id.etTipoA);
+        Resultado =(EditText)findViewById(R.id.etResultado);
+        btSave = findViewById(R.id.btSave);
+        btSave.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                saveFile();
+            }
+
+        });
+        btnRead = findViewById(R.id.btRead);
+        btnRead.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+            }
+        });
+
+    }
+    public void saveFile(){
+    String d1 = Matricula.getText().toString();
+    String d2 = NumLiberacion.getText().toString();
+    String d3 = Nombre.getText().toString();
+    String d4 = Apellidop.getText().toString();
+    String d5 = Apellidom.getText().toString();
+    String d6 = TipoA.getText().toString();
+    String d7 = Resultado.getText().toString();
+        FileOutputStream fileOutputStream=null;
+        try {
+            fileOutputStream= openFileOutput(FILE_NAME,MODE_PRIVATE);
+            fileOutputStream.write(d1.getBytes());
+            fileOutputStream.write(d2.getBytes());
+            fileOutputStream.write(d3.getBytes());
+            fileOutputStream.write(d4.getBytes());
+            fileOutputStream.write(d5.getBytes());
+            fileOutputStream.write(d6.getBytes());
+            fileOutputStream.write(d7.getBytes());
+            fileOutputStream.write("/// ".getBytes());
+            Log.d("TAG1","fichero salvado en:"+ getFilesDir()+"/"+ FILE_NAME);
+        }catch (Exception e){
+         e.printStackTrace();
+        }finally {
+            if(fileOutputStream!= null){
+                try{
+                    fileOutputStream.close();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+    }
+    private void readFile(){
+        FileInputStream fileInputStream=null;
+        try {
+            fileInputStream=openFileInput(FILE_NAME);
+            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
+            BufferedReader bufferedReader=new BufferedReader(inputStreamReader);
+            String lineatexto;
+            StringBuilder stringBuilder=new StringBuilder();
+            while((lineatexto=bufferedReader.readLine())!=null){
+                stringBuilder.append(lineatexto).append("\n");
+            }
+            Matricula.setText(stringBuilder);
+            NumLiberacion.setText(stringBuilder);
+            Nombre.setText(stringBuilder);
+            Apellidop.setText(stringBuilder);
+            Apellidom.setText(stringBuilder);
+            TipoA.setText(stringBuilder);
+            Resultado.setText(stringBuilder);
+        }catch(Exception e){
+
+        }finally {
+            if(fileInputStream!=null){
+                try{
+                    fileInputStream.close();
+                }catch (Exception e){
+
+                }
+            }
+        }
     }
 
     //====================================================
