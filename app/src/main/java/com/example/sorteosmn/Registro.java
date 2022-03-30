@@ -42,7 +42,6 @@ import java.util.Map;
 import java.util.Vector;
 
 public class Registro extends AppCompatActivity {
-
     //------------------------------------------------------------------------------
     RequestQueue requestQueue;
     public static final String url = "http://192.168.56.1/android/save.php"; // hay que cambiar la ip

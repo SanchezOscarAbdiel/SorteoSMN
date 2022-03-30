@@ -151,7 +151,6 @@ public class sorteo extends AppCompatActivity {
 
                         readUser2 (ConsultaMatricula);
 
-
                     } catch (JSONException e) {
                         System.out.println("Error1 " + e.getMessage());
                     }
