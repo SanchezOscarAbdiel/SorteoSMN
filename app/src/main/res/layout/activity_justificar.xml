@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tvIntentos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
@@ -17,8 +18,36 @@
         android:background="@drawable/texto_cop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/txtJus1"
+            android:layout_width="86dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="39dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="41dp"
+            android:text="LLEVAS"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/tvNumeros"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="41dp"
+            android:text="---"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintStart_toEndOf="@+id/txtJus1"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/binfo"
@@ -36,8 +65,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="321dp"
-            android:layout_height="319dp"
+            android:layout_width="306dp"
+            android:layout_height="131dp"
             android:layout_marginStart="37dp"
             android:layout_marginEnd="37dp"
             android:layout_marginBottom="112dp"
@@ -45,125 +74,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <EditText
-                android:id="@+id/Edoc1"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/eddit_blanco"
-                android:ems="10"
-                android:hint=" Ingresar Link de Documento"
-                android:inputType="textPersonName"
-                android:textColor="#8C8A8A"
-                android:textColorHint="#8C8A8A" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="43dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/benviar1"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#355000"
-                    android:text="Enviar" />
-
-                <TextView
-                    android:id="@+id/textView27"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="            " />
-
-                <Switch
-                    android:id="@+id/switch1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Utilizado"
-                    android:textColor="#8C8A8A" />
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/Edoc2"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/eddit_blanco"
-                android:ems="10"
-                android:hint=" Ingresar Link de Documento"
-                android:inputType="textPersonName"
-                android:textColor="#8C8A8A"
-                android:textColorHint="#8C8A8A" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/benviar2"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#355000"
-                    android:text="Enviar" />
-
-                <TextView
-                    android:id="@+id/textView28"
-                    android:layout_width="104dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="            " />
-
-                <Switch
-                    android:id="@+id/switch2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Utilizado"
-                    android:textColor="#8C8A8A" />
-
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/Edoc3"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/eddit_blanco"
-                android:ems="10"
-                android:hint=" Ingresar Link de Documento"
-                android:inputType="textPersonName"
-                android:textColor="#8C8A8A"
-                android:textColorHint="#8C8A8A" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/benviar3"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#355000"
-                    android:text="Enviar" />
-
-                <TextView
-                    android:id="@+id/textView29"
-                    android:layout_width="106dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="            " />
-
-                <Switch
-                    android:id="@+id/switch3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Utilizado"
-                    android:textColor="#8C8A8A" />
-            </LinearLayout>
+                android:orientation="horizontal" />
 
             <EditText
                 android:id="@+id/Edoc4"
@@ -188,20 +105,6 @@
                     android:backgroundTint="#355000"
                     android:text="Enviar" />
 
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="104dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="            " />
-
-                <Switch
-                    android:id="@+id/switch4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Utilizado"
-                    android:textColor="#8C8A8A" />
             </LinearLayout>
 
         </LinearLayout>
@@ -211,13 +114,15 @@
             android:layout_width="316dp"
             android:layout_height="188dp"
             android:layout_marginStart="39dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="-50dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/boligrafo_de_bloc_de_notas" />
 
         <Button
@@ -227,13 +132,26 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="33dp"
-            android:onClick="pasaV4"
+            android:onClick="pasaMain1"
             android:text="->"
             android:textColor="#8C8A8A"
             android:textColorHint="#8C8A8A"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+        <TextView
+            android:id="@+id/tvJus2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="43dp"
+            android:text="JUSTIFICACIONES TOTALES"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintStart_toEndOf="@+id/tvNumeros"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -245,6 +163,15 @@
         android:background="@drawable/top_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="            "
+            tools:layout_editor_absoluteX="90dp"
+            tools:layout_editor_absoluteY="376dp" />
 
         <TextView
             android:id="@+id/tjust"

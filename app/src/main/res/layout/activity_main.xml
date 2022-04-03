@@ -8,15 +8,16 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="374dp"
         android:layout_height="544dp"
+        android:layout_marginTop="25dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.994">
+        app:layout_constraintTop_toBottomOf="@+id/imageView6">
 
         <Button
             android:id="@+id/bperfil"
@@ -24,18 +25,9 @@
             android:layout_height="85dp"
             android:backgroundTint="#FFFFFF"
             android:drawableLeft="@drawable/search"
+            android:onClick="pasaV3"
+
             android:text="Perfil"
-
-            android:textColor="@color/black"
-            android:textSize="34sp" />
-
-        <Button
-            android:id="@+id/bsorteo"
-            android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:backgroundTint="#FFFFFF"
-            android:drawableLeft="@drawable/lottery__1_"
-            android:text="Sorteo"
             android:textColor="@color/black"
             android:textSize="34sp" />
 
@@ -55,6 +47,7 @@
             android:layout_height="85dp"
             android:backgroundTint="#FFFFFF"
             android:drawableLeft="@drawable/send"
+            android:onClick="pasaJust"
             android:text="Justificaciones"
             android:textColor="#000000"
             android:textSize="24sp" />
@@ -75,45 +68,10 @@
             android:layout_height="85dp"
             android:backgroundTint="#FFFFFF"
             android:drawableLeft="@drawable/info"
+            android:onClick="popUpCuartel"
             android:text="Info Cuartel"
             android:textColor="#0C0C0C"
             android:textSize="24sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="360dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="112dp"
-        android:layout_marginEnd="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/edbusqueda"
-            android:layout_width="221dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:background="@drawable/fondo_edditext"
-            android:ems="10"
-            android:hint=" Busqueda..."
-
-            android:inputType="textPersonName"
-            android:textColor="#8C8A8A"
-            android:textColorHint="#606060" />
-
-        <Button
-            android:id="@+id/bbusqueda"
-            android:layout_width="132dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="#355000"
-            android:drawableLeft="@drawable/lupa"
-            android:text="busqueda"
-            android:textSize="12dp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,9 +81,12 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="3dp"
         android:background="@drawable/top_edit"
+        app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textView"
@@ -142,16 +103,58 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/button22"
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="515dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/tvTipoP"
+        app:layout_constraintVertical_bias="0.447"
+        app:srcCompat="@drawable/paleta_registro"
+        tools:layout_editor_absoluteX="-98dp" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="79dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/usuario__2_"
+        tools:layout_editor_absoluteX="20dp" />
+
+    <TextView
+        android:id="@+id/tvTipoP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="11dp"
-        android:onClick="pasaV3"
-        android:text="->"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="200dp"
+        android:text="------------"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintVertical_bias="0.466" />
+
+    <TextView
+        android:id="@+id/tvTipoP2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="11dp"
+        android:text="------------"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/tvTipoP" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

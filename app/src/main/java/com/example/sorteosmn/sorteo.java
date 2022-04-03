@@ -3,14 +3,29 @@ package com.example.sorteosmn;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -22,16 +37,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,9 +63,9 @@ public class sorteo extends AppCompatActivity {
     public static String ConsultaMatricula;
     RequestQueue requestQueue;
     //-----------------------txt
-    public Button btSave;
-    public Button btnRead;
-    public static final String FILE_NAME = "Texto.txt";
+    public FloatingActionButton btGuarda;
+    public Button btLee;
+    Login objL = new Login();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +74,12 @@ public class sorteo extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        System.out.println("res 1 "+res);
-        if(res=true){
+
+        if(objR.EnviaBola == "Negra"){ //dependiendo del tipo de bola muestra una pantalla u otra para un ingreso de datos correspondiente
             System.out.println("res 2 "+res);
             PopUpReserva();
+        }else{
+            PopUpEncuadrado();
         }
 
         Matricula = (EditText)findViewById(R.id.etMatricula);
@@ -69,102 +91,28 @@ public class sorteo extends AppCompatActivity {
         Resultado =(EditText)findViewById(R.id.etResultado);
 
         readUser1(null); //muestra los datos en los campos
-        System.out.println("set bola "+objR.EnviaBola);
-        Resultado.setText("Bola "+objR.EnviaBola);
+
+        Resultado.setText("Bola "+objR.EnviaBola);//muestra resultados en pantalla
         if(objR.EnviaBola == "Blanca"){TipoA.setText("Encuadrado");}else{TipoA.setText("Reserva");}
         ///------------------txt
-        setUpView();
-    }
-    //___________Txt-------------------//
-    private void setUpView() {
-        Matricula = (EditText)findViewById(R.id.etMatricula);
-        NumLiberacion = (EditText)findViewById(R.id.etLiberacion);
-        Nombre = (EditText)findViewById(R.id.etNombreS);
-        Apellidop = (EditText)findViewById(R.id.etApellidop);
-        Apellidom = (EditText)findViewById(R.id.etApellidom);
-        TipoA = (EditText)findViewById(R.id.etTipoA);
-        Resultado =(EditText)findViewById(R.id.etResultado);
-        btSave = findViewById(R.id.btSave);
-        btSave.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                saveFile();
-            }
 
-        });
-        btnRead = findViewById(R.id.btRead);
-        btnRead.setOnClickListener(new View.OnClickListener(){
+        btGuarda = findViewById(R.id.btSave);
+        btGuarda.setOnClickListener(new View.OnClickListener() {//guarda la matricula (contraseña de inicio de sesion) en el portapapeles del dispositivo y abre la pantalla de inicio de sesion
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("EditText", Matricula.getText().toString());
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(sorteo.this, "TU CONTRASEÑA (MATRICULA)"+"\nHa sido copiada al portapapeles.",Toast.LENGTH_LONG).show();
+
+                    pasaV8(null);
 
             }
         });
-
     }
-    public void saveFile(){
-    String d1 = Matricula.getText().toString();
-    String d2 = NumLiberacion.getText().toString();
-    String d3 = Nombre.getText().toString();
-    String d4 = Apellidop.getText().toString();
-    String d5 = Apellidom.getText().toString();
-    String d6 = TipoA.getText().toString();
-    String d7 = Resultado.getText().toString();
-        FileOutputStream fileOutputStream=null;
-        try {
-            fileOutputStream= openFileOutput(FILE_NAME,MODE_PRIVATE);
-            fileOutputStream.write(d1.getBytes());
-            fileOutputStream.write(d2.getBytes());
-            fileOutputStream.write(d3.getBytes());
-            fileOutputStream.write(d4.getBytes());
-            fileOutputStream.write(d5.getBytes());
-            fileOutputStream.write(d6.getBytes());
-            fileOutputStream.write(d7.getBytes());
-            fileOutputStream.write("/// ".getBytes());
-            Log.d("TAG1","fichero salvado en:"+ getFilesDir()+"/"+ FILE_NAME);
-        }catch (Exception e){
-         e.printStackTrace();
-        }finally {
-            if(fileOutputStream!= null){
-                try{
-                    fileOutputStream.close();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }
 
 
-    }
-    private void readFile(){
-        FileInputStream fileInputStream=null;
-        try {
-            fileInputStream=openFileInput(FILE_NAME);
-            InputStreamReader inputStreamReader=new InputStreamReader(fileInputStream);
-            BufferedReader bufferedReader=new BufferedReader(inputStreamReader);
-            String lineatexto;
-            StringBuilder stringBuilder=new StringBuilder();
-            while((lineatexto=bufferedReader.readLine())!=null){
-                stringBuilder.append(lineatexto).append("\n");
-            }
-            Matricula.setText(stringBuilder);
-            NumLiberacion.setText(stringBuilder);
-            Nombre.setText(stringBuilder);
-            Apellidop.setText(stringBuilder);
-            Apellidom.setText(stringBuilder);
-            TipoA.setText(stringBuilder);
-            Resultado.setText(stringBuilder);
-        }catch(Exception e){
-
-        }finally {
-            if(fileInputStream!=null){
-                try{
-                    fileInputStream.close();
-                }catch (Exception e){
-
-                }
-            }
-        }
-    }
 
     //====================================================
 
@@ -174,7 +122,7 @@ public class sorteo extends AppCompatActivity {
     public Button aceptar;
     public Switch captcha;
 
-    public void PopUpReserva(){
+    public void PopUpReserva(){ //muestra una pantalla emergente con campos de texto correspondientes a la actualizacion de datos del reserva
         dialogBuilder = new AlertDialog.Builder(this);
         final View contactPopupView = getLayoutInflater().inflate(R.layout.popup,null);
 
@@ -200,15 +148,60 @@ public class sorteo extends AppCompatActivity {
 
     }
 
-    private void updateUser(String xd) {
-        String URL ="http://192.168.56.1/android/edit.php";
+    private EditText peso,altura,sangre;public String TipoSangre,EnviaPeso,EnviaAltura; int Peso; Double Altura;
+    public Button aceptar1;
+    public void PopUpEncuadrado(){//muestra una pantalla emergente con campos de texto correspondientes a la actualizacion de datos del encuadrado
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View contactPopupView = getLayoutInflater().inflate(R.layout.popupenc,null);
+
+        peso = (EditText) contactPopupView.findViewById(R.id.etPesoEnc);
+        altura = (EditText) contactPopupView.findViewById(R.id.etAlturaEnc);
+        sangre = (EditText) contactPopupView.findViewById(R.id.etSangre);
+        aceptar1 = (Button) contactPopupView.findViewById(R.id.btAceptaEnc);
+
+        dialogBuilder.setView(contactPopupView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        aceptar1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Peso = Integer.parseInt(peso.getText().toString()) ;
+                Altura =Double.parseDouble(altura.getText().toString()) ;
+                TipoSangre = sangre.getText().toString();
+
+                //revisa que los datos ingresados sean correctos
+                if(TipoSangre.equalsIgnoreCase("A+") ||TipoSangre.equalsIgnoreCase("A-")
+                        ||TipoSangre.equalsIgnoreCase("B+") ||TipoSangre.equalsIgnoreCase("B-")
+                        ||TipoSangre.equalsIgnoreCase("O+") ||TipoSangre.equalsIgnoreCase("O-")
+                        ||TipoSangre.equalsIgnoreCase("AB-") ||TipoSangre.equalsIgnoreCase("AB+")
+                        && (Altura>1.3 && Altura<2.1) && (Peso>40 && Peso <180)){
+                    System.out.println("sangre "+TipoSangre+"Peso "+Peso+" Altura "+Altura);
+
+                    EnviaAltura = String.valueOf(Altura);
+                    EnviaPeso = String.valueOf(Peso);
+                    updateUserE();
+                    dialog.dismiss(); //cierra la ventana
+                }else {
+                    System.out.println("sangre "+TipoSangre+"Peso "+Peso+" Altura "+Altura);
+                    Toast.makeText(sorteo.this,"REVISA TUS DATOS" ,Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+
+    }
+
+    public void updateUserE(){ //si los datos de PopUpEncuadrado son correctos, en este metodo se manda a llamar al llenado en la base de datos
+        String URL ="http://192.168.56.1/android/editE.php";
         StringRequest stringRequest =new StringRequest(
                 Request.Method.POST,
                 URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(sorteo.this,"SE HA ACTUALIZADO EL NUMERO DE CELULAR" ,Toast.LENGTH_LONG).show();
+                        Toast.makeText(sorteo.this,"SE HAN ACTUALIZADO LOS DATOS" ,Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener(){
@@ -222,8 +215,40 @@ public class sorteo extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params =new HashMap<>();
+                params.put("TipoSangre",TipoSangre);
+                params.put("Peso",EnviaPeso);
+                params.put("Altura",EnviaAltura);
+                params.put("CURP_Enc",objR.EnviaCurp);//
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    private void updateUser(String xd) {// toma los datos de PopUpReserva y los ingresa en la base de datos
+        String URL ="http://192.168.56.1/android/edit.php";
+        StringRequest stringRequest =new StringRequest(
+                Request.Method.POST,
+                URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(sorteo.this,"SE HA ACTUALIZADO EL NUMERO DE CELULAR" ,Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }
+        ){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params =new HashMap<>();
                 params.put("Num_Tel",Num_Tel);
-                params.put("CURP_Res",objR.EnviaCurp);//
+                params.put("CURP_Res",objR.EnviaCurp);// define a que reserva actualizar
 
                 return params;
             }
@@ -232,7 +257,7 @@ public class sorteo extends AppCompatActivity {
     }
 
 
-    public void readUser1 (String xd) {
+    public void readUser1 (String xd) { //recoge los datos de la base de datos para su muestreo
         String URL = "http://192.168.56.1/android/fetchsorteo.php?curp=" + objR.EnviaCurp;
         System.out.println("CURP "+objR.EnviaCurp);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
@@ -264,12 +289,13 @@ public class sorteo extends AppCompatActivity {
                         Apellidom.setText(jsonObject.getString("ApellidoMat_Res"));
 
                         System.out.println("matricula2: "+jsonObject.getString("Matricula_Res"));
-
+                        ConsultaMatricula = jsonObject.getString("Matricula_Res");
+                        readUser2 (ConsultaMatricula);
                     } catch (JSONException e) {
                         System.out.println("Error2 " + e.getMessage());
                     }
                 }
-                readUser2 (ConsultaMatricula);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -282,7 +308,7 @@ public class sorteo extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
-    public void readUser2 (String mat) {
+    public void readUser2 (String mat) {//metodo de complementacion de readUser2 para datos faltantes
         String URL = "http://192.168.56.1/android/fetchsorteo2.php?matricula=" + mat;
         System.out.println("CURP "+mat);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
@@ -325,10 +351,18 @@ public class sorteo extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
-        public void pasaV7 (View view) {
+    public void pasaV7 (View view) {
         Intent v1 =new Intent(this,Login.class);
         startActivity(v1);
     }
+
+    public void pasaV8 (String xd) {
+        Intent v1 =new Intent(this,Login.class);
+        startActivity(v1);
+    }
+    public void pasaV9 (String xd) {
+        Intent v1 =new Intent(this,MainActivity.class);
+        startActivity(v1);
+    }
+
 }
-
-

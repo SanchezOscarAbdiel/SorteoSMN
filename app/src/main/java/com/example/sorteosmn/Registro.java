@@ -87,7 +87,7 @@ public class Registro extends AppCompatActivity {
 
     //======================INGRESO DATOS A SPINNERS==========================
 
-    public void colonia (String xd){
+    public void colonia (String xd){ //rellena un spinner en base al archivo txt
 
         requestQueue = Volley.newRequestQueue(this);
         spinner = (Spinner) findViewById(R.id.spColonia);
@@ -119,12 +119,12 @@ public class Registro extends AppCompatActivity {
 
     }
 
-    public void EstadoCivil(String xd){
+    public void EstadoCivil(String xd){ //rellena spinner
         ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_Estado, android.R.layout.simple_spinner_item);
         spEstadoc.setAdapter(adapterE);
     }
 
-    public void Discapacidad(String xd){
+    public void Discapacidad(String xd){ //rellena spinner
         ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_discapacidad, android.R.layout.simple_spinner_item);
         Discapacidad.setAdapter(adapterE);
     }
@@ -201,12 +201,9 @@ public class Registro extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
-//----------------------------------consulta
-
-
     }
 
-    public void PopUp(String bola){
+    public void PopUp(String bola){ //muestra la bola (blanca,negra) resultante
         AlertDialog.Builder alerta = new AlertDialog.Builder(Registro.this);
         alerta.setMessage("Felicidades, usted es bola: "+bola+"\nSerá dirigido a su hoja de datos.").setCancelable(false)
                 .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
@@ -223,7 +220,7 @@ public class Registro extends AppCompatActivity {
         titulo.show();
     }
 
-private void readUser (String xd){
+private void readUser (String xd){ //guarda los datos del aspirante necesarios para su muestreo en el resumen
     String URL ="http://192.168.56.1/android/fetch1.php?curp="+curp;
       JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
           @Override
@@ -264,7 +261,7 @@ private void readUser (String xd){
       requestQueue.add(jsonArrayRequest);
 }
 
-    private void ReadUser(String xd){
+    private void ReadUser(String xd){ //metodo no usado
         String URL ="http://192.168.56.1/android/fetch.php?curp=jijija";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -293,7 +290,7 @@ private void readUser (String xd){
         );
 
         requestQueue.add(jsonObjectRequest);
-    }
+    } //codigo no servible
     // ------------------------------------------------------------------------------
     public void pasaV6 (String xd) {
        Intent v1 =new Intent(this,sorteo.class);

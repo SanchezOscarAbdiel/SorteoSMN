@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#7A9F35"
+                android:onClick="LeeNoticias"
                 android:text="Noticias" />
 
             <Button
@@ -43,13 +44,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#7A9F35"
-                android:text="Lista Enc" />
+                android:onClick="popUpListado"
+                android:text="Lista Adscritos" />
 
             <Button
                 android:id="@+id/bfaltas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#7A9F35"
+                android:onClick="LeeFaltas"
                 android:text="Faltas" />
 
             <Button
@@ -57,22 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#7A9F35"
+                android:onClick="popUpBaja"
                 android:text="Bajas" />
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:backgroundTint="#355000"
-                app:srcCompat="@drawable/punta_de_flecha_hacia_arriba"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <Button
-                android:id="@+id/button23"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="pasaV4"
-                android:text="->" />
 
         </LinearLayout>
 
@@ -111,12 +100,13 @@
                         android:textColor="#020202" />
 
                     <EditText
-                        android:id="@+id/edpanel"
+                        android:id="@+id/edTituloN"
                         android:layout_width="270dp"
                         android:layout_height="35dp"
                         android:background="@drawable/eddit_blanco"
                         android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textColor="#000000" />
                 </TableRow>
 
                 <TableRow
@@ -135,8 +125,11 @@
                         android:layout_width="270dp"
                         android:layout_height="150dp"
                         android:background="@drawable/eddit_blanco"
-                        android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:inputType="text|textMultiLine|textCapSentences"
+                        android:maxLength="400"
+                        android:singleLine="false"
+                        android:textColor="#000000"
+                        android:verticalScrollbarPosition="left" />
 
                 </TableRow>
 
@@ -147,17 +140,21 @@
                     <TextView
                         android:id="@+id/textView33"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Cierre:"
+                        android:layout_height="57dp"
+                        android:text="Destinatario"
                         android:textColor="#020202" />
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName29"
+                        android:id="@+id/edDestinatario"
                         android:layout_width="270dp"
                         android:layout_height="39dp"
                         android:background="@drawable/eddit_blanco"
                         android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:hint="General,Encuadrado,Reserva"
+                        android:inputType="textPersonName"
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textColorHint="#292626" />
 
                 </TableRow>
 
@@ -172,23 +169,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="Publicar"
                 android:backgroundTint="#7A9F35"
+                android:onClick="InsertaNoticias"
+                android:text="Publicar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <Button
-                android:id="@+id/button18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="81dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="8dp"
-                android:text="Eliminar"
-                android:backgroundTint="#7A9F35"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button13"
-                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
