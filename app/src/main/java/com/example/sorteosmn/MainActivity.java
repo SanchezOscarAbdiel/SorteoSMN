@@ -1,82 +1,89 @@
 package com.example.sorteosmn;
 
+//IMPORT: ELEMENTOS DE LA PANTALLA
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-
+//IMPORT: ELEMENTOS PARA EL TRATAMIENTO DE DATOS EN LA APLICACIÓN CON FORMATO JSON (ARRAY DE ELEMENTOS)
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+//MENU PRINCIPAL DE LA APLICACION (DONDE SE UBICAN LOS BOTONES PRINCIPALES)
 public class MainActivity extends AppCompatActivity {
 
+    //LLAMADO GENERAL A SQL
     RequestQueue requestQueue;
+    //VARIABLES DE ENTRONO GLOBAL
     Login objL = new Login();
-    String matricula = objL.Matricula,CURP,Nombres,ApellidoPat,ApellidoMat,Correo,Num_Tel;
-    String Num_Placa,Num_Seccion,Num_Liberacion,Fecha_Recepcion,Nombre_Ins,ApellidoPat_Ins,ApellidoMat_Ins;
-    int enseña;
-    Button Bperfil,Bescuadron,Bnoticias;
+    public static String acumulaTitulo, acumulaCuerpo, acumulaDestino, total;
+    String matricula = objL.Matricula, CURP = "", Nombres = "", ApellidoPat = "", ApellidoMat = "", Correo = "", Num_Tel = "";
+    String Num_Placa = "", Num_Seccion = "", Num_Liberacion = "", Fecha_Recepcion = "", Nombre_Ins = "", ApellidoPat_Ins = "", ApellidoMat_Ins = "";
+    int enseña = 0;
+    //LLAMADA A LOS ELEMENTOS DE LA INTERFAZ DE LOGEO EN DONDE SE INTRODUCEN LOS DATOS
+    Button Bperfil, Bescuadron, Bnoticias;
     TextView Usuario, tipo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        requestQueue = Volley.newRequestQueue(this); //LLAMADA UNIVERSAL A PHP
-
+        //LLAMADA UNIVERSAL A PHP
+        requestQueue = Volley.newRequestQueue(this);
+        //RECOGIDA DE DATOS DE LOS ELEMENTOS DE LA INTERFAZ EN VARIABLES
         Usuario = (TextView) findViewById(R.id.tvTipoP);
         tipo = (TextView) findViewById(R.id.tvTipoP2);
-
         Usuario.setText(objL.Correo);
         tipo.setText(objL.tipoA);
-
-        consultaUsuario(null); //manda a llamar a metodo
-
+        //LLAMADA AL METODO CONSULTA USUARIO
+        consultaUsuario(null);
+        //RECOGIDA DE DATOS DE LOS ELEMENTOS DE LA INTERFAZ EN VARIABLES
         Bperfil = (Button) findViewById(R.id.bperfil);
         botonPerfil(null);
-
         Bescuadron = (Button) findViewById(R.id.bescuadron);
         botonEscuadron(null);
-
         Bnoticias = (Button) findViewById(R.id.bnoticias);
         botonNoticias(null);
     }
 
-    public void botonPerfil(String xd){ //decide si muestra pantalla de informacion de Encuadrado o de Reserva
+    //METODO PARA LA RESOLUCION DE QUE PANTALLA MOSTRAR SEGUN EL LOGEO (ENCUADRADO/RESERVA O ADMINISTRADOR)
+    public void botonPerfil(String xd){
         Bperfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(enseña == 1){PopUpE(null);}else if(enseña == 2){PopUpR(null);};
-
+                if (enseña == 1) {
+                    PopUpE(null);
+                } else if (enseña == 2) {
+                    PopUpR(null);
+                }
             }
         });
     }
 
-    public void botonEscuadron(String xd){ //manda a llamar popUp de informacion
+    //METODO PARA MOSTRAR UN POPUP DE INFORMACION DE ESCUADRON
+    public void botonEscuadron(String xd){
         Bescuadron.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             consultaEscuadronE(null);
-
             }
         });
     }
-    public void botonNoticias(String xd){ //manda a llamar guardado de noticias en BD y su muestreo en popUp
+
+    //METODO DE LLAMADA AL GUARDADO DE LAS NOTICIAS Y AVISOS PARA SU MUESTREO EN UN POPUP
+    public void botonNoticias(String xd){
         Bnoticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,301 +92,275 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-//==========================================================
-    public void consultaUsuario (String xd) { //recoge informacion del usuario en BD
+
+    //METODO PARA CONSULTAR LA INFORMACION DEL ENCUADRADO O RESERVA EN EL PERFIL
+    public void consultaUsuario(String xd) {
+        //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION, LLEVANDO COMO PARAMETRO LA MATRICULA
         String URL = "http://192.168.56.1/android/fetchMainA.php?matricula=" + objL.Matricula;
-        System.out.println("CURP "+objL.Matricula);
+        //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
-                System.out.println("response1: "+response);
                 for (int x = 0; x < response.length(); x++) {
-                    System.out.println("a ");
                     try {
-                        jsonObject = response.getJSONObject(x); //informacion de encuadrado
+                        //PARA TRAER LA INFORMACION DEL ENCUADRADO
+                        jsonObject = response.getJSONObject(x);
                         CURP = (jsonObject.getString("CURP_Enc"));
                         Nombres = (jsonObject.getString("Nombres_Enc"));
                         ApellidoPat = (jsonObject.getString("ApellidoPat_Enc"));
                         ApellidoMat = (jsonObject.getString("ApellidoMat_Enc"));
                         Correo = (jsonObject.getString("Correo_Enc"));
                         enseña = 1;
-
-                        //readUser2 ( objL.Matricula);
-
                     } catch (JSONException e) {
-                        System.out.println("Error1 " + e.getMessage());
+                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                     try {
-                        jsonObject = response.getJSONObject(x); //informacion de reserva
-                        CURP=(jsonObject.getString("CURP_Res"));
-                        Nombres=(jsonObject.getString("Nombres_Res"));
-                        ApellidoPat=(jsonObject.getString("ApellidoPat_Res"));
-                        ApellidoMat=(jsonObject.getString("ApellidoMat_Res"));
+                        //PARA TRAER LA INFORMACION DEL RESERVA
+                        jsonObject = response.getJSONObject(x);
+                        CURP = (jsonObject.getString("CURP_Res"));
+                        Nombres = (jsonObject.getString("Nombres_Res"));
+                        ApellidoPat = (jsonObject.getString("ApellidoPat_Res"));
+                        ApellidoMat = (jsonObject.getString("ApellidoMat_Res"));
                         Correo = (jsonObject.getString("Correo_Res"));
                         Num_Tel = (jsonObject.getString("Num_Tel"));
                         enseña = 2;
-
                     } catch (JSONException e) {
-                        System.out.println("Error2 " + e.getMessage());
+                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Error2 " + error.getMessage());
+                Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
             }
-        }
-        );
-        requestQueue= Volley.newRequestQueue(this);
+        });
+        requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
 
-    public void PopUpE(String bola){ //muestreo de informacion de encuadrado
+    //METODO PARA EL MUESTREO DE LA INFORMACION DE LOS ENCUADRADOS MEDIANTE UN POPUP
+    public void PopUpE(String bola){
         AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
-        alerta.setMessage("DATOS DEL ENCUADRADO: "+matricula+"\nNombre: "+Nombres
-                                                        +"\nApellidos: "+ApellidoPat+" "+ApellidoMat
-                                                        +"\nCorreo: "+Correo
-                                                        +"\nCURP: "+CURP).setCancelable(false)
+        alerta.setMessage("DATOS DEL ENCUADRADO: " + matricula + ".\n- NOMBRE(S): " + Nombres
+                + "\n- APPELLIDOS: " + ApellidoPat + " " + ApellidoMat
+                + "\n- CORREO: " + Correo
+                + "\n- CURP: " + CURP).setCancelable(false)
                 .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-
                         dialog.dismiss();
                     }
                 });
-
         AlertDialog titulo = alerta.create();
         titulo.setTitle("PERFIL DE USUARIO");
         titulo.show();
     }
-    public void PopUpR(String bola){ //muestreo de informacion de reserva
+
+    //METODO PARA EL MUESTREO DE LA INFORMACION DE LOS RESERVA MEDIANTE UN POPUP
+    public void PopUpR(String bola) {
         AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
-        alerta.setMessage("DATOS DEL ENCUADRADO: "+matricula+"\nNombre: "+Nombres
-                +"\nApellidos"+ApellidoPat+" "+ApellidoMat
-                +"\nCorreo: "+Correo
-                +"\nCURP: "+CURP
-                +"\nNum_Tel: "+Num_Tel).setCancelable(false)
+        alerta.setMessage("DATOS DEL ENCUADRADO: " + matricula + ".\n- NOMBRE(S): " + Nombres
+                + "\n- APELLIDOS" + ApellidoPat + " " + ApellidoMat
+                + "\n- CORREO: " + Correo
+                + "\n- CURP: " + CURP
+                + "\n- TELEFONO: " + Num_Tel).setCancelable(false)
                 .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         dialog.dismiss();
-
                     }
                 });
-
         AlertDialog titulo = alerta.create();
         titulo.setTitle("SORTEO");
         titulo.show();
     }
-//==========================================================
-    public void consultaEscuadronE(String xd){ //consulta de datos para escuadron
+
+    //METODO PARA CONSULTAR DATOS DE 3 TABLAS COMPLEMENTARIAS A LA INFORMACION DEL ENCUADRADO
+        //TRAER LOS DATOS DEL ESCUADRON DEL ENCUADRADO (TABLA ESCUADRON)
+    public void consultaEscuadronE(String xd){
+        //LLAMADA AL METODO SQL PARA HACER LA CONSULTA ADECUADA LLEVANDO COMO PARAMETRO LA MATRICULA DEL ENCUADRADO
         String URL = "http://192.168.56.1/android/fetchMainAescuadron.php?matricula=" + objL.Matricula;
-        System.out.println("CURP "+objL.Matricula);
+        //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
-                System.out.println("response1: "+response);
                 for (int x = 0; x < response.length(); x++) {
-                    System.out.println("a ");
                     try {
                         jsonObject = response.getJSONObject(x);
                         Num_Placa = (jsonObject.getString("Num_Placa"));
                         Num_Seccion = (jsonObject.getString("N_Seccion"));
                         consultaEscuadronE2(null);
-                        //readUser2 ( objL.Matricula);
-
                     } catch (JSONException e) {
-                        System.out.println("Error1 " + e.getMessage());
+                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                     try {
                         jsonObject = response.getJSONObject(x);
                         Num_Liberacion=(jsonObject.getString("Num_Liberacion"));
                         Fecha_Recepcion=(jsonObject.getString("Fecha_Recepcion"));
                         PopUpRescuadron(null);
-
                     } catch (JSONException e) {
-                        System.out.println("Error2 " + e.getMessage());
+                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Error2 " + error.getMessage());
+                Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
             }
         }
         );
         requestQueue= Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
-    public void consultaEscuadronE2(String xd){ //metodo de complemento para consultaEscuadron
+        //TRAER LOS DATOS DEL NUMERO DE LIBERACION DE LA CARTILLA (TABLA CARTILLA)
+    public void consultaEscuadronE2(String xd) {
+        //LLAMADA AL METODO SQL PARA HACER LA CONSULTA ADECUADA LLEVANDO COMO PARAMETRO LA MATRICULA DEL ENCUADRADO
         String URL = "http://192.168.56.1/android/fetchMainAescuadron2.php?matricula=" + objL.Matricula;
-        System.out.println("CURP "+objL.Matricula);
+        //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
-                System.out.println("response1: "+response);
                 for (int x = 0; x < response.length(); x++) {
-                    System.out.println("a ");
                     try {
                         jsonObject = response.getJSONObject(x);
-                        Num_Liberacion=(jsonObject.getString("Num_Liberacion"));
+                        Num_Liberacion = (jsonObject.getString("Num_Liberacion"));
                         consultaEscuadronE3(null);
-
                     } catch (JSONException e) {
-                        System.out.println("Error1 " + e.getMessage());
+                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Error2 " + error.getMessage());
+                Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
             }
-        }
-        );
-        requestQueue= Volley.newRequestQueue(this);
+        });
+        requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
-    public void consultaEscuadronE3(String xd){ //metodo complementario para consultaEscuadronE2
+        //TRAER LOS DATOS DEL INSTRUCTOR SEGUN EL ESCUADRON (TABLA INSTRUCTOR)
+    public void consultaEscuadronE3(String xd){
+        //LLAMADA AL METODO SQL PARA HACER LA CONSULTA ADECUADA LLEVANDO COMO PARAMETRO LA PLACA DEL INSTRUCTOR
         String URL = "http://192.168.56.1/android/fetchMainAescuadron3.php?placa=" + Num_Placa;
-        System.out.println("CURP "+objL.Matricula);
+        //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
-                System.out.println("response1: "+response);
                 for (int x = 0; x < response.length(); x++) {
-                    System.out.println("a ");
                     try {
                         jsonObject = response.getJSONObject(x);
-                        Nombre_Ins=(jsonObject.getString("Nombre_Ins"));
-                        ApellidoPat_Ins=(jsonObject.getString("ApellidoPat_Ins"));
-                        ApellidoMat_Ins=(jsonObject.getString("ApellidoMat_Ins"));
+                        Nombre_Ins = (jsonObject.getString("Nombre_Ins"));
+                        ApellidoPat_Ins = (jsonObject.getString("ApellidoPat_Ins"));
+                        ApellidoMat_Ins = (jsonObject.getString("ApellidoMat_Ins"));
                         PopUpEescuadron(null);
                     } catch (JSONException e) {
-                        System.out.println("Error1 " + e.getMessage());
+                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Error2 " + error.getMessage());
+                Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
             }
-        }
-        );
+        });
         requestQueue= Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
 
-    //========================================METODOS POPUP QUE MUESTRAN INFORMACION
-    public void PopUpEescuadron(String bola){ //muestreo de informacion para los metodos consultaEscuadronE
+    //METODO POPUP QUE MUESTRA INFORMACION EN POPUP DEL ENCUADRADO (NUMERO DE LIBERACION, NUMERO DE SECCION, PLACA DEL INSTRUCTOR, NOMBRE DEL INSTRUCTOR)
+    public void PopUpEescuadron(String bola) {
         AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
-        alerta.setMessage("DATOS DEL ENCUADRADO: "+matricula+"\nPlaca de instructor: "+Num_Placa
-                +"\nNumero de seccion: "+Num_Seccion
-                +"\nNum Liberacion: "+Num_Liberacion
-                +"\nNombre de instructor: "+Nombre_Ins+" "+ApellidoPat_Ins+" "+ApellidoMat_Ins).setCancelable(false)
+        alerta.setMessage("DATOS DEL ENCUADRADO: " + matricula + ".\n- N° LIBERACIÓN: " + Num_Liberacion
+                + "\n- N° SECCIÓN: " + Num_Seccion
+                + "\n- PLACA DEL INSTRUCTOR: " + Num_Placa
+                + "\n- NOMBRE INSTRUCTOR: " + Nombre_Ins + " " + ApellidoPat_Ins + " " + ApellidoMat_Ins).setCancelable(false)
                 .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-
                         dialog.dismiss();
                     }
                 });
-
         AlertDialog titulo = alerta.create();
         titulo.setTitle("PERFIL DE USUARIO");
         titulo.show();
     }
+    //METODO POPUP QUE MUESTRA INFORMACION EN POPUP DEL RESERVA (NUMERO DE LIBERACION Y LA FECHA DE RECOGIDA PARA LA CARTILLA)
     public void PopUpRescuadron(String bola){
         AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
-        alerta.setMessage("DATOS DEL RESERVA: "+matricula+"\nNum Liberacion: "+Num_Liberacion
-                +"\nFecha de recepcion: "+Fecha_Recepcion
+        alerta.setMessage("DATOS DEL RESERVA: "+matricula+".\n- N° LIBERACIÓN: "+Num_Liberacion
+                +"\n- FECHA DE RECEPCIÓN PARA CARTILLA: "+Fecha_Recepcion
                 ).setCancelable(false)
                 .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-
                         dialog.dismiss();
                     }
                 });
-
         AlertDialog titulo = alerta.create();
         titulo.setTitle("PERFIL DE USUARIO");
         titulo.show();
     }
-
-    public void popUpListado(View view){
-
+    //METODO QUE MUESTRA UN LISTADO DE LOS ADSCRITOS EN EL ANIO O EDICION ACTUAL DEL SMN
+    public void popUpListado(View view) {
         AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
-        alerta.setMessage("Elija un tipo de adscrito a lista"+"\nNOTA: se mostraran resultados del año en curso").setCancelable(false)
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        alerta.setMessage("¡CUIDADO!: Elija un tipo de adscrito a lista.").setCancelable(false)
+                .setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-
-
                         dialog.cancel();
                     }
                 });
         AlertDialog titulo = alerta.create();
-        titulo.setTitle("Listado de adscritos");
+        titulo.setTitle("LISTADO DE ADSCRITOS");
         titulo.show();
     }
 
-  public static  String acumulaTitulo,acumulaCuerpo,acumulaDestino, total;
-    public void LeeEncuadrado(String xd){//consulta de noticias
-        String URL = "http://192.168.56.1/android/fetchNoticiasE.php?tipoA="+objL.tipoA;
-        System.out.println("=======url=== "+objL.tipoA);
+    //METODO PARA MOSTRAR LOS ANUNCIOS/NOTICIAS EN BASE DE SER UN ENCUADRADO/RESERVA
+    public void LeeEncuadrado(String xd) {
+        //LLAMADO AL METODO SQL PARA HACER LA SELECCION DE LAS NOTICIAS
+        String URL = "http://192.168.56.1/android/fetchNoticiasE.php?tipoA=" + objL.tipoA;
+        //INICIA EL TRATAMIENTO DE LA INFORAMCION CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
-                System.out.println("response1: "+response);
                 for (int x = 0; x < response.length(); x++) {
-                    System.out.println("a ");
                     try {
                         jsonObject = response.getJSONObject(x);
-                        acumulaTitulo= jsonObject.getString("titulo")+"\n";
-                        acumulaCuerpo = jsonObject.getString("cuerpo")+"\n";
-                        acumulaDestino = jsonObject.getString("destinatario")+"\n";
-                       // System.out.println("AAAAAAAAA"+acumulaTitulo+acumulaCuerpo+acumulaDestino);
-                        total=total+acumulaTitulo+acumulaCuerpo+acumulaDestino+"\n";
-                        System.out.println("TOOOOTALL "+total);
+                        acumulaTitulo = jsonObject.getString("titulo") + "\n";
+                        acumulaCuerpo = jsonObject.getString("cuerpo") + "\n";
+                        acumulaDestino = jsonObject.getString("destinatario") + "\n";
+                        total = total + acumulaTitulo + acumulaCuerpo + acumulaDestino + "\n";
                     } catch (JSONException e) {
-                        System.out.println("Error1 " + e.getMessage());
+                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
-
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Error2 " + error.getMessage());
+                Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
             }
-        }
-        );
-        requestQueue= Volley.newRequestQueue(this);
+        });
+        requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
 
-    public void popUpNoticias(String total){ //muestreo de noticias
-
+    //METODO PARA EL MUESTREO DE LAS NOTICIAS MEDIANTE UN POPUP
+    public void popUpNoticias(String total) {
         AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
         alerta.setMessage(total).setCancelable(false)
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                .setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-
                         dialog.cancel();
                     }
                 });
@@ -388,30 +369,29 @@ public class MainActivity extends AppCompatActivity {
         titulo.show();
     }
 
+    //METODO PARA MOSTRAR INFORMACION SOBRE EL CUARTEL DONDE SE LLEVA A CABO EL SMN
     public void popUpCuartel(View view){//muestreo de informacion para INFO CUARTEL
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Cuartel");
-        builder.setMessage("Edicion de sorteo No 2022"+"\nDirección: 17a zona militar San Juan del Río para el 7mo regimiento mecanizado"+"nLocalizado en la ex-hacienda ‘La Llave’, en el rancho La Llave"+"\nCon línea de atención al número: 427 118 0758.");
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        builder.setTitle("CUARTEL.");
+        builder.setMessage("EDICIÓN DEL SORTEO N°: 2022."+"\nDIRECCIÓN: 17a Zona Militar San Juan del Río para el 7mo Regimiento Mecanizado, Ex-Hacienda ‘La Llave’."+"\nNÚMERO TEL.: 427 118 0758.");
+        builder.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.cancel();
             }
         });
         AlertDialog dialog = builder.show();
-
-// Must call show() prior to fetching views
+        //HACE LA GRAVEDAD DEL TEXTO AL CENTRO (ALINEACION CENTRAL)
         TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
         messageView.setGravity(Gravity.CENTER);
-
         TextView titleView = (TextView)dialog.findViewById(this.getResources().getIdentifier("alertTitle", "id", "android"));
         if (titleView != null) {
             titleView.setGravity(Gravity.CENTER);
         }
-
-
     }
-//pases de pantalla
+
+    //METODOS DE PASE ENTRE INTERFACES
+        //INTERFAZ DE JUSTIFICACION
     public void pasaJust (View view) {
         Intent v1 =new Intent(this,justificar.class);
         startActivity(v1);

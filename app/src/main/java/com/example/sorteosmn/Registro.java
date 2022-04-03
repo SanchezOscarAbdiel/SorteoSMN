@@ -1,9 +1,9 @@
 package com.example.sorteosmn;
 
+//IMPORT: ELEMENTOS DE LA PANTALLA
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,45 +23,43 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
+//IMPORT: ELEMENTOS PARA EL TRATAMIENTO DE DATOS EN LA APLICACIÓN CON FORMATO JSON (ARRAY DE ELEMENTOS)
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Registro extends AppCompatActivity {
-    //------------------------------------------------------------------------------
+    //LLAMADA GENERAL A SQL
     RequestQueue requestQueue;
-    public static final String url = "http://192.168.56.1/android/save.php"; // hay que cambiar la ip
-// ------------------------------------------------------------------------------
+    public static final String url = "http://192.168.56.1/android/save.php";
+    //ELEMENTOS DE INTERFAZ PARA LA CAPTURA DE DATOS
     public Spinner spinner;
     public Spinner spEstadoc;
     public Spinner Discapacidad;
-
-    public RadioGroup Sexo; public RadioButton Masculino, Femenino;
-   public static EditText Nombre,ApellidoP,ApellidoM,Curp,Edad,NumEx,NumIn,Calle,Ciudad,Profesion,Correo,Resultado;
-    public static String edad,nombre,apellidop,apellidom,curp,num_ext,num_int,calle,colonia,ciudad,estado_civ,profesion,sexo,discapacidad,correo;
-  public static  int Sexo1;
-    public static String EnviaCurp,EnviaMatricula,EnviaBola; //variables consultas
+    public RadioGroup Sexo;
+    public RadioButton Masculino, Femenino;
+    public static EditText Nombre, ApellidoP, ApellidoM, Curp, Edad, NumEx, NumIn, Calle, Ciudad, Profesion, Correo, Resultado;
+    public static String edad, nombre, apellidop, apellidom, curp, num_ext, num_int, calle, colonia, ciudad, estado_civ, profesion, sexo, discapacidad, correo;
+    //VARIABLES DE ENTRONO GLOBAL
+    public static int Sexo1;
+    public static String EnviaCurp, EnviaMatricula, EnviaBola;
     Boolean Reserva = true;
-// ------------------------------------------------------------------------------
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-
+        //LLAMADA UNIVERSAL A PHP
         requestQueue = Volley.newRequestQueue(this);
-
+        //RECOGIDA DE DATOS DE LOS ELEMENTOS DE LA INTERFAZ EN VARIABLES
         spEstadoc=(Spinner) findViewById(R.id.spEstadoc);
         Sexo=(RadioGroup) findViewById(R.id.rgSexo);
         Nombre = (EditText)findViewById(R.id.etNombre);
@@ -79,28 +75,28 @@ public class Registro extends AppCompatActivity {
         Discapacidad= (Spinner) findViewById(R.id.spdiscapacidad);
         Correo= (EditText)findViewById(R.id.etCorreo);
         Resultado =(EditText)findViewById(R.id.edResultado);
-        //--------------------LLAMA LLENADO DE SPINNERS
-       colonia(null);
-       EstadoCivil(null);
-       Discapacidad(null);
+        //LLAMA LLENADO DE SPINNERS
+        colonia(null);
+        EstadoCivil(null);
+        Discapacidad(null);
     }
 
-    //======================INGRESO DATOS A SPINNERS==========================
-
-    public void colonia (String xd){ //rellena un spinner en base al archivo txt
-
+    //METODOS PARA INGRESO DE DATOS A SPINNERS (MENUS DESPLEGABLES) EN BASE A TXT
+    public void colonia (String xd){
+        //SE LLAMA A LOS EDITTEXT DECLARADOS EN EL ENTORNO GLOBAL PARA EXTRAER LOS DATOS INGRESADOS
         requestQueue = Volley.newRequestQueue(this);
         spinner = (Spinner) findViewById(R.id.spColonia);
-
+        //VARIABLES LOCALES AL METODO DONDE SE GUARDARA LA INFORMACION DEL TXT
         List<String> spin = new ArrayList<String>();
         String linea = null;
 
-        InputStream is =this.getResources().openRawResource(R.raw.colonias);
-        BufferedReader reader =new BufferedReader(new InputStreamReader(is));
-        if (is!=null){
-            while (true){
+        //INICIA LA RECOGIDA DE DATOS DESDE EL TXT Y LOS INGRESA AL SPINNER
+        InputStream is = this.getResources().openRawResource(R.raw.colonias);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        if (is != null) {
+            while (true) {
                 try {
-                    if (!((linea=reader.readLine())!=null)) break;
+                    if (!((linea = reader.readLine()) != null)) break;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -112,26 +108,25 @@ public class Registro extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         String datos[] = spin.toArray(new String[spin.size()]);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, datos);
         spinner.setAdapter(adapter);
 
     }
 
-    public void EstadoCivil(String xd){ //rellena spinner
-        ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_Estado, android.R.layout.simple_spinner_item);
+    //LLENADO DE LOS SPINNERS PARA ESTADOCIVIL Y DISCAPACIDAD A PARTIR DE ARCHIVOS XML
+    public void EstadoCivil(String xd) { //rellena spinner
+        ArrayAdapter<CharSequence> adapterE = ArrayAdapter.createFromResource(this, R.array.combo_Estado, android.R.layout.simple_spinner_item);
         spEstadoc.setAdapter(adapterE);
     }
-
-    public void Discapacidad(String xd){ //rellena spinner
-        ArrayAdapter<CharSequence>adapterE=ArrayAdapter.createFromResource(this,R.array.combo_discapacidad, android.R.layout.simple_spinner_item);
+    public void Discapacidad(String xd) { //rellena spinner
+        ArrayAdapter<CharSequence> adapterE = ArrayAdapter.createFromResource(this, R.array.combo_discapacidad, android.R.layout.simple_spinner_item);
         Discapacidad.setAdapter(adapterE);
     }
 
-    //===========================INSERCIO EN BASE DE DATOS=====================================
+    //INSERCION EN BASE DE DATOS
     public void createUser(View view){
-
+        //SE LLAMA A LOS EDITTEXT DECLARADOS EN EL ENTORNO GLOBAL PARA EXTRAER LOS DATOS INGRESADOS
         nombre = Nombre.getText().toString();
         apellidop=ApellidoP.getText().toString();
         apellidom = ApellidoM.getText().toString();
@@ -147,40 +142,31 @@ public class Registro extends AppCompatActivity {
         Sexo1 = Sexo.getCheckedRadioButtonId();
         Masculino = findViewById(Sexo1);
         sexo = Masculino.getText().toString();
-        if(sexo == "(M) Masculino")
+        if (sexo == "(M) Masculino") {
             sexo = "F";
-        else
+        } else {
             sexo = "M";
+        }
         discapacidad = Discapacidad.getSelectedItem().toString();
         correo = Correo.getText().toString();
 
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.POST,
-                url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(Registro.this, "correct", Toast.LENGTH_LONG).show();
-                        System.out.println("response "+response);
-
-                        readUser(null);
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Registro.this, "Revise sus datos.", Toast.LENGTH_LONG).show();
-                        System.out.println("error "+error);
-                    }
-                }
-        ){
+        //INDICA QUE EL REGISTRO HAYA SIDO CORRECTO O SI EXISTE ALGUN ERROR
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(Registro.this, "¡EXITO AL REALIZAR EL REGISTRO!, FELICIDADES", Toast.LENGTH_LONG).show();
+                readUser(null);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Registro.this, "¡ERROR AL REALIZAR EL REGISTRO!, PRUEBA DE NUEVO", Toast.LENGTH_LONG).show();
+            }
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-
                 params.put("nombre", nombre);
                 params.put("apellidop", apellidom);
                 params.put("apellidom", apellidom);
@@ -196,104 +182,72 @@ public class Registro extends AppCompatActivity {
                 params.put("sexo", sexo);
                 params.put("discapacidad", discapacidad);
                 params.put("correo", correo);
-                System.out.println("hola "+nombre+" "+apellidop+" "+apellidom+" "+curp+" "+edad+" "+num_ext+" "+num_int+" "+calle+" "+colonia+" "+ciudad+" "+estado_civ+" "+profesion+" "+sexo+" "+discapacidad+" "+correo);
                 return params;
             }
         };
         requestQueue.add(stringRequest);
     }
 
-    public void PopUp(String bola){ //muestra la bola (blanca,negra) resultante
+    //METODO PARA MOSTRAR EL RESULTADO DEL SORTEO (BOLA BLANCA O BOLA NEGRA)
+    public void PopUp(String bola) {
         AlertDialog.Builder alerta = new AlertDialog.Builder(Registro.this);
-        alerta.setMessage("Felicidades, usted es bola: "+bola+"\nSerá dirigido a su hoja de datos.").setCancelable(false)
+        alerta.setMessage("¡FELICIDADES!, El color resultante del sorteo es: " + bola + "\n¡CUIDADO!: Serás dirigido a tu hoja de datos.").setCancelable(false)
                 .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         EnviaBola = bola;
-                         pasaV6(null);
-
+                        pasaV6(null);
                     }
                 });
-
         AlertDialog titulo = alerta.create();
         titulo.setTitle("SORTEO");
         titulo.show();
     }
 
-private void readUser (String xd){ //guarda los datos del aspirante necesarios para su muestreo en el resumen
-    String URL ="http://192.168.56.1/android/fetch1.php?curp="+curp;
-      JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
-          @Override
-          public void onResponse(JSONArray response) {
-              JSONObject jsonObject = null;
-
-              for (int x = 0; x < response.length(); x++) {
-                  try {
-                      jsonObject = response.getJSONObject(x);
-                          Resultado.setText(jsonObject.getString("Matricula_Enc") + jsonObject.getString("CURP_Enc"));
-                          EnviaMatricula = jsonObject.getString("Matricula_Enc"); EnviaCurp = jsonObject.getString("CURP_Enc");
-                          System.out.println("Curp: "+EnviaCurp+" MATRICULA "+EnviaMatricula);
+    //METODO PARA MOSTRAR LOS DATOS NECESARIOS EN LA HOJA DEL ASPIRANTE A MODO DE RESUMEN
+    private void readUser(String xd) {
+        //SE ESTABLECE LA CONEXION CON LA BASE DE DATOS PARA LA RECOGIDA DE LOS DATOS Y SE PASA COMO PARAMETRO LA CURP DEL ASPIRANTE
+        String URL = "http://192.168.56.1/android/fetch1.php?curp=" + curp;
+        //EN ESTE METODO SE CAPTURAN LOS RESULTADOS DE LA CONULTA ANTERIOR Y SE TRATA LA INFORMACION CON OBJETOS JSON
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject = null;
+                for (int x = 0; x < response.length(); x++) {
+                    try {
+                        jsonObject = response.getJSONObject(x);
+                        Resultado.setText(jsonObject.getString("Matricula_Enc") + jsonObject.getString("CURP_Enc"));
+                        EnviaMatricula = jsonObject.getString("Matricula_Enc");
+                        EnviaCurp = jsonObject.getString("CURP_Enc");
                         Reserva = false;
-                      PopUp("Blanca");
-
-                  } catch (JSONException e) {
-                      System.out.println("Error1 " + e.getMessage());
-                  } try{
-                      jsonObject = response.getJSONObject(x);
-                      Resultado.setText(jsonObject.getString("Matricula_Res") + jsonObject.getString("CURP_Res"));
-                      EnviaMatricula = jsonObject.getString("Matricula_Res"); EnviaCurp = jsonObject.getString("CURP_Res");
-                      System.out.println("Curp: "+EnviaCurp+" MATRICULA "+EnviaMatricula);
-                      //Reserva = true;
-                      PopUp("Negra");
-                  } catch(JSONException e) {
-                      System.out.println("Error2 " + e.getMessage());
-                  }
-              }
-          }
-      }, new Response.ErrorListener() {
-          @Override
-          public void onErrorResponse(VolleyError error) {
-              System.out.println("Error2 " + error.getMessage());
-          }
-      }
-      );
-      requestQueue=Volley.newRequestQueue(this);
-      requestQueue.add(jsonArrayRequest);
-}
-
-    private void ReadUser(String xd){ //metodo no usado
-        String URL ="http://192.168.56.1/android/fetch.php?curp=jijija";
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                URL,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        String CURP_Enc,Matricula_Enc;
-                        try {
-                            CURP_Enc =  response.getString("CURP_Enc");
-                            Matricula_Enc = response.getString("Matricula_Enc");
-
-                            System.out.println(Matricula_Enc);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        PopUp("Blanca");
+                    } catch (JSONException e) {
+                        Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("errorss "+error);
+                    try {
+                        jsonObject = response.getJSONObject(x);
+                        Resultado.setText(jsonObject.getString("Matricula_Res") + jsonObject.getString("CURP_Res"));
+                        EnviaMatricula = jsonObject.getString("Matricula_Res");
+                        EnviaCurp = jsonObject.getString("CURP_Res");
+                        PopUp("Negra");
+                    } catch (JSONException e) {
+                        Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
                     }
                 }
-        );
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
 
-        requestQueue.add(jsonObjectRequest);
-    } //codigo no servible
-    // ------------------------------------------------------------------------------
-    public void pasaV6 (String xd) {
-       Intent v1 =new Intent(this,sorteo.class);
+    //METODO PARA EL PASE ENTRE INTERFACES
+    public void pasaV6(String xd) {
+        Intent v1 = new Intent(this, sorteo.class);
         startActivity(v1);
     }
 
