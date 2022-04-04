@@ -9,13 +9,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="209dp"
-        android:layout_height="97dp"
+        android:layout_width="283dp"
+        android:layout_height="236dp"
         android:layout_marginStart="83dp"
-        android:layout_marginTop="356dp"
+        android:layout_marginTop="156dp"
         android:layout_marginEnd="59dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/usuario__1_" />
@@ -96,13 +96,5 @@
             app:cornerRadius="20dp" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvConexion"
-        android:layout_width="376dp"
-        android:layout_height="141dp"
-        android:text="Conexion: "
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="174dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

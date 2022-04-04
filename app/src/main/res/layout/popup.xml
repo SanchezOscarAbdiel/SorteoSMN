@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="500dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -12,47 +12,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="181dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="172dp"
+        android:layout_marginBottom="23dp"
         android:text="INFORMACION IMPORTANTE"
+        app:layout_constraintBottom_toTopOf="@+id/TvSubtitulo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.539"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="28dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/TvSubtitulo"
         android:layout_width="249dp"
         android:layout_height="42dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="9dp"
         android:text="Si eres reserva, deberás ingresar: °Numero telefonico"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="70dp" />
+        app:layout_constraintBottom_toTopOf="@+id/etCelular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitulo" />
 
     <Button
         android:id="@+id/btnAceptar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="126dp"
         android:text="ACEPTAR"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="205dp" />
-
-    <Switch
-        android:id="@+id/swCaptcha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="Leí el acuerdo"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="205dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCelular" />
 
     <EditText
         android:id="@+id/etCelular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="96dp"
         android:ems="10"
         android:hint="Numero de telefono."
         android:inputType="number"
-        tools:layout_editor_absoluteX="105dp"
-        tools:layout_editor_absoluteY="121dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv"
+        app:layout_constraintTop_toBottomOf="@+id/TvSubtitulo" />
 
     <TextView
         android:id="@+id/tv"
@@ -60,7 +65,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="2dp"
         android:text="+52"
+        app:layout_constraintEnd_toStartOf="@+id/etCelular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TvSubtitulo" />
 

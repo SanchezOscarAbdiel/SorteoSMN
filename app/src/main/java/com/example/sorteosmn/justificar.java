@@ -2,7 +2,10 @@ package com.example.sorteosmn;
 
 //IMPORT: ELEMENTOS DE LA PANTALLA
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,8 +33,8 @@ public class justificar extends AppCompatActivity {
     //LLAMADA A METODOS SQL DE LOGEO
     RequestQueue requestQueue;
     Login objL = new Login();
-    String Matricula = objL.Matricula,link;
-    int contador = 0;
+    String Matricula117 = objL.Matricula,link;
+    int contador;
     //ELEMENTOS DE INTERFAZ PARA LA CAPTURA DE DATOS
     EditText E4;
     Button enviar;
@@ -47,11 +50,9 @@ public class justificar extends AppCompatActivity {
         funa(null);
         //SE CAPTURAN LOS DATOS TRAIDOS POR LOS ELEMENTOS DE LA INTERFAZ EN VARIABLES
         E4 = (EditText) findViewById(R.id.Edoc4);
-        link = E4.getText().toString();
+
         enviar = (Button) findViewById(R.id.benviar4);
-        numero = (TextView) findViewById(R.id.tvNumeros);
-        //CONTADOR PARA IMPRIMIR EL NUMERO DE FALTAS
-        numero.setText(contador);
+
 
         /*CUANDO SE HACE CLICK EN EL BOTON DE JUSTIFICAR SE LLAMA A ESTE METODO QUE INSERTARA EL LINK DE LA
           JUSTIFICACION DENTRO DE LA BASE DE DATOS Y EN SU TABLA CORRESPONDIENTE*/
@@ -61,6 +62,7 @@ public class justificar extends AppCompatActivity {
                 //SE COMPRUEBA CON EL IF QUE NO SE TENGAN MAS DE 4 JUSTIFICACIONES POR ENCUADRADO (YA QUE ES EL LIMITE)
                 if (contador < 5) {
                     //SI SE CUMPLE LA CONDICION ENTONCES SE LLAMA AL METODO PARA INSERTAR LA JUSTIFICACION Y SE REGRESA A LA VENTANA PRINCIPAL
+                    link = E4.getText().toString();
                     InsertaJ(null);
                     pasaMain(null);
                 } else {
@@ -74,7 +76,7 @@ public class justificar extends AppCompatActivity {
     //CUENTA LA CANTIDAD DE JUSTIFICACIONES QUE HA SUBIDO EL ENCUADRADO
     public void funa(String xd) {
         //SE LLAMA AL METODO SQL QUE REALIZARA LA CONSULTA EN LA TABLA CORRESPONDIENTE LLEVANDO COMO PARAMETRO LA MATRICULA
-        String URL = "http://192.168.56.1/android/cuentaJ.php?Matricula_Enc=" + Matricula;
+        String URL = "http://192.168.56.1/android/cuentaJ.php?Matricula_Enc=" + Matricula117;
         //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -103,7 +105,8 @@ public class justificar extends AppCompatActivity {
     //SI AUN CUMPLE CON LOS CRITERIOS PARA JUSTIFICAR, ENTONCES ESTE METODO HARA LA SUBIDA DEL JUSTIFICANTE
     public void InsertaJ(String xd) {
         //SE HACE EL LLAMADO A SQL PARA INSERTAR LOS DATOS CORRESPONDIENTES EN LA TABLA INDICADA
-        String url = "http://192.168.56.1/android/saveJustifica.php?Matricula_Enc="+Matricula+"&L_DocJust="+link;
+        System.out.println("Prueba justifica"+link);
+        String url = "http://192.168.56.1/android/saveJustifica.php?Matricula_Enc="+Matricula117+"&L_DocJust="+link;
         //HACE LA INSERCION A LA TABLA DE JUSTIFICACIONES UNA VEZ REALIZADO EL LLAMADO A SQL
         StringRequest stringRequest = new StringRequest(
             Request.Method.POST, url, new Response.Listener<String>() {
@@ -122,12 +125,26 @@ public class justificar extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("Matricula_Enc", Matricula);
+                params.put("Matricula_Enc", Matricula117);
                 params.put("L_DocJust", link);
                 return params;
             }
         };
         requestQueue.add(stringRequest);
+    }
+
+    public void PopUpInfo(View view) {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(justificar.this);
+        alerta.setMessage("INSTRUCCIONES: "+"\n\n-Escanea en formato pdf el documento justificatorio\n-Sube dicho documento a Google Drive con formato de nombre 'Matricula_Nombre'\n-Obten un enlace publico del archivo\nPega dicho enlace en el espacio correspondiente y envialo\n\nSolo se dispone de 4 intentos totales").setCancelable(false)
+                .setNeutralButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog titulo = alerta.create();
+        titulo.setTitle("JUSTIFICACION DE FALTAS");
+        titulo.show();
     }
 
     //METODOS PARA PASAR DE INTERFAZ (PERFIL)

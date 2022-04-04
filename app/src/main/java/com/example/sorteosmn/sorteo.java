@@ -42,7 +42,6 @@ public class sorteo extends AppCompatActivity {
     private EditText telefono;
     public String Num_Tel;
     public Button aceptar;
-    public Switch captcha;
     private EditText peso, altura, sangre;
     public String TipoSangre, EnviaPeso, EnviaAltura;
     int Peso;
@@ -102,7 +101,6 @@ public class sorteo extends AppCompatActivity {
         final View contactPopupView = getLayoutInflater().inflate(R.layout.popup,null);
         telefono = (EditText) contactPopupView.findViewById(R.id.etCelular);
         aceptar = (Button) contactPopupView.findViewById(R.id.btnAceptar);
-        captcha = (Switch) contactPopupView.findViewById(R.id.swCaptcha);
         dialogBuilder.setView(contactPopupView);
         dialog = dialogBuilder.create();
         dialog.show();
@@ -110,8 +108,9 @@ public class sorteo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Num_Tel = telefono.getText().toString();
-                updateUser(null);
-                dialog.dismiss();
+                if(Num_Tel.length()>8 && Num_Tel.length()<10){updateUser(null); dialog.dismiss();}
+                else{Toast.makeText(sorteo.this, "Numero de celular incorrecto", Toast.LENGTH_LONG).show();}
+
             }
         });
     }

@@ -85,7 +85,7 @@ public class panelControl extends AppCompatActivity {
         Cuerpo.setText("");
         etTitulo.setText(" ");
         AlertDialog.Builder alerta = new AlertDialog.Builder(panelControl.this);
-        alerta.setMessage("¡CUIDADO!: Elija un tipo de adscrito a lista").setCancelable(false)
+        alerta.setMessage("¡CUIDADO!: Elija un tipo de adscrito a listar").setCancelable(false)
                 .setPositiveButton("ENCUADRADOS", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {

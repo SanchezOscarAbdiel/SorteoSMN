@@ -74,7 +74,6 @@ public class Registro extends AppCompatActivity {
         Profesion= (EditText)findViewById(R.id.etProfesion);
         Discapacidad= (Spinner) findViewById(R.id.spdiscapacidad);
         Correo= (EditText)findViewById(R.id.etCorreo);
-        Resultado =(EditText)findViewById(R.id.edResultado);
         //LLAMA LLENADO DE SPINNERS
         colonia(null);
         EstadoCivil(null);
@@ -160,7 +159,7 @@ public class Registro extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Registro.this, "¡ERROR AL REALIZAR EL REGISTRO!, PRUEBA DE NUEVO", Toast.LENGTH_LONG).show();
+               // Toast.makeText(Registro.this, "¡ERROR AL REALIZAR EL REGISTRO!, PRUEBA DE NUEVO", Toast.LENGTH_LONG).show();
             }
         }) {
             @Nullable
@@ -168,7 +167,7 @@ public class Registro extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("nombre", nombre);
-                params.put("apellidop", apellidom);
+                params.put("apellidop", apellidop);
                 params.put("apellidom", apellidom);
                 params.put("curp", curp);
                 params.put("edad", edad);
@@ -216,29 +215,27 @@ public class Registro extends AppCompatActivity {
                 for (int x = 0; x < response.length(); x++) {
                     try {
                         jsonObject = response.getJSONObject(x);
-                        Resultado.setText(jsonObject.getString("Matricula_Enc") + jsonObject.getString("CURP_Enc"));
                         EnviaMatricula = jsonObject.getString("Matricula_Enc");
                         EnviaCurp = jsonObject.getString("CURP_Enc");
                         Reserva = false;
                         PopUp("Blanca");
                     } catch (JSONException e) {
-                        Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
                     }
                     try {
                         jsonObject = response.getJSONObject(x);
-                        Resultado.setText(jsonObject.getString("Matricula_Res") + jsonObject.getString("CURP_Res"));
                         EnviaMatricula = jsonObject.getString("Matricula_Res");
                         EnviaCurp = jsonObject.getString("CURP_Res");
                         PopUp("Negra");
                     } catch (JSONException e) {
-                        Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
+               // Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
             }
         });
         requestQueue = Volley.newRequestQueue(this);

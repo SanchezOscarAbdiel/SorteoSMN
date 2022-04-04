@@ -26,7 +26,7 @@ public class Login extends AppCompatActivity{
     //LLAMADA A LOS ELEMENTOS DE LA INTERFAZ DE LOGEO EN DONDE SE INTRODUCEN LOS DATOS
     EditText correo, matricula;
     //VARIABLES QUE ALMACENAN LOS DATOS RECIBIDOS EN LOS EDITTEXT
-    public static String Correo = "", Matricula = "", tipoA = "";
+    public static String Correo = "", Matricula, tipoA = "";
     public static int desvio = 0;
     //GUARDARA EL RESULTADO DE LA CONSULTA PARA OBTENER LOS DATOS VALIDOS DE LOGEO
     String z = "";

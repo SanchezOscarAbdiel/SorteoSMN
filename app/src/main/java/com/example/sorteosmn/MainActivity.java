@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     //METODO PARA EL MUESTREO DE LA INFORMACION DE LOS RESERVA MEDIANTE UN POPUP
     public void PopUpR(String bola) {
         AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
-        alerta.setMessage("DATOS DEL ENCUADRADO: " + matricula + ".\n- NOMBRE(S): " + Nombres
+        alerta.setMessage("DATOS DEL RESERVA: " + matricula + ".\n- NOMBRE(S): " + Nombres
                 + "\n- APELLIDOS" + ApellidoPat + " " + ApellidoMat
                 + "\n- CORREO: " + Correo
                 + "\n- CURP: " + CURP
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         AlertDialog titulo = alerta.create();
-        titulo.setTitle("SORTEO");
+        titulo.setTitle("PERFIL DE USUARIO");
         titulo.show();
     }
 
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                         Num_Seccion = (jsonObject.getString("N_Seccion"));
                         consultaEscuadronE2(null);
                     } catch (JSONException e) {
-                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                     try {
                         jsonObject = response.getJSONObject(x);
@@ -202,14 +202,14 @@ public class MainActivity extends AppCompatActivity {
                         Fecha_Recepcion=(jsonObject.getString("Fecha_Recepcion"));
                         PopUpRescuadron(null);
                     } catch (JSONException e) {
-                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
             }
         }
         );
@@ -231,14 +231,14 @@ public class MainActivity extends AppCompatActivity {
                         Num_Liberacion = (jsonObject.getString("Num_Liberacion"));
                         consultaEscuadronE3(null);
                     } catch (JSONException e) {
-                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
+               // Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
             }
         });
         requestQueue = Volley.newRequestQueue(this);
@@ -261,14 +261,14 @@ public class MainActivity extends AppCompatActivity {
                         ApellidoMat_Ins = (jsonObject.getString("ApellidoMat_Ins"));
                         PopUpEescuadron(null);
                     } catch (JSONException e) {
-                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
             }
         });
         requestQueue= Volley.newRequestQueue(this);

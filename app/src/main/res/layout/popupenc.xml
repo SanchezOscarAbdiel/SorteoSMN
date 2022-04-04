@@ -94,14 +94,12 @@
         android:id="@+id/btAceptaEnc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="49dp"
-        android:layout_marginTop="79dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="188dp"
         android:layout_marginBottom="246dp"
         android:text="Aceptar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
 
         app:layout_constraintTop_toBottomOf="@+id/etAlturaEnc"
         app:layout_constraintVertical_bias="1.0" />
@@ -110,9 +108,7 @@
         android:id="@+id/etSangre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="132dp"
+        android:layout_marginTop="125dp"
         android:layout_marginBottom="2dp"
         android:ems="10"
         android:hint="O+,O-,A+,A-, etc..."
@@ -120,8 +116,8 @@
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/tvSubtituloe4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvSubtituloe2"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubtituloe2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSubtituloe2"
+        app:layout_constraintVertical_bias="0.412" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
