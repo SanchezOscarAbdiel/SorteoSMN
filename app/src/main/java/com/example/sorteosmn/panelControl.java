@@ -204,34 +204,35 @@ public class panelControl extends AppCompatActivity {
     }
 
     //METODO PARA HACER EFECTIBA LA BAJA MEDIANTE LA CONSULTA SQL CON LA MATRICULA RECOGIDA ANTERIORMENTE
-    private void updateBaja(String matricula) {
+    private void updateBaja(String matricula) {//RECIBE: matricula del encuadrado (String mediante editText) || ENVIA: HashMap hacia script PHP para actualizacion de BD
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
         String URL ="http://192.168.56.1/android/editBaja.php";
         StringRequest stringRequest =new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Toast.makeText(panelControl.this,"¡ATENCIÓN!: SE RESTRINGIO AL ENCUADRADO" ,Toast.LENGTH_LONG).show();
+                    Toast.makeText(panelControl.this,"¡ATENCIÓN!: SE RESTRINGIO AL ENCUADRADO" ,Toast.LENGTH_LONG).show(); //MENSAJE DE EXITO
                 }
             }, new Response.ErrorListener(){
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(panelControl.this,"¡ERROR!: REVISE LA MATRICULA INGRESADA" ,Toast.LENGTH_LONG).show();
+                    Toast.makeText(panelControl.this,"¡ERROR!: REVISE LA MATRICULA INGRESADA" ,Toast.LENGTH_LONG).show(); //MENSAJE DE ERROR
                 }
             }
         ){
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+                // RECOGE TODOS LOS DATOS INGRESADOS Y LOS ENVIA A LA BASE DE DATOS ("variableDeBD", variableRecogida)
                 Map<String, String> params = new HashMap<>();
                 params.put("matricula", matricula);
                 return params;
             }
         };
-        requestQueue.add(stringRequest);
+        requestQueue.add(stringRequest); //TOMA EL HASH MAP Y LO ENVIA AL SCRIPT
     }
 
     //METODO PARA AGREGAR NOTICIAS (LADO DEL ADMINISTRADOR)
-    public void InsertaNoticias(View view) {
+    public void InsertaNoticias(View view) {//RECIBE: variables String mediante EditText divididas en 3 campos || ENVIA: objeto Hash con los datos etiquetados
         //SE LLAMA A LOS EDITTEXT DECLARADOS EN EL ENTORNO GLOBAL PARA EXTRAER LOS DATOS INGRESADOS
         titulo = etTitulo.getText().toString();
         Mensaje = Cuerpo.getText().toString();
@@ -254,6 +255,7 @@ public class panelControl extends AppCompatActivity {
                 @Nullable
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
+                    // RECOGE TODOS LOS DATOS INGRESADOS Y LOS ENVIA A LA BASE DE DATOS ("variableDeBD", variableRecogida)
                     Map<String, String> params = new HashMap<>();
                     params.put("titulo", titulo);
                     params.put("cuerpo", Mensaje);
@@ -261,7 +263,7 @@ public class panelControl extends AppCompatActivity {
                     return params;
                 }
             };
-            requestQueue.add(stringRequest);
+            requestQueue.add(stringRequest); //TOMA EL HASH MAP Y LO ENVIA AL SCRIPT
         }else{
             Toast.makeText(panelControl.this,"¡ERROR!: Revise el destinatario" ,Toast.LENGTH_LONG).show();
         }

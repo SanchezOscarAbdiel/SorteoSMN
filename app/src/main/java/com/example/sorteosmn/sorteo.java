@@ -152,24 +152,24 @@ public class sorteo extends AppCompatActivity {
     }
 
     //SI LOS DATOS DE POPUP ENCUADRADO SON CORRECTOS, EN ESTE METODO SE MANDA A LLAMAR AL LLENADO EN LA BASE DE DATOS
-    public void updateUserE(){
+    public void updateUserE(){//RECIBE: datos String y Float recogidos de campos EditText para actualizar encuadrado || ENVIA: Mapa HashMap hacia el script PHP para guardado en BD
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
         String URL = "http://192.168.56.1/android/editE.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() { //PREPARA LOS DATOS PARA REDIRECCIONAMIENTO A SCRIPT
             @Override
             public void onResponse(String response) {
-                Toast.makeText(sorteo.this, "¡EXITO!: SE HAN ACTUALIZADO LOS DATOS", Toast.LENGTH_LONG).show();
+                Toast.makeText(sorteo.this, "¡EXITO!: SE HAN ACTUALIZADO LOS DATOS", Toast.LENGTH_LONG).show(); //MENSAJE DE EXITO
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(sorteo.this, "¡ADVERTENCIA!: Revise los datos.", Toast.LENGTH_LONG).show();
+                Toast.makeText(sorteo.this, "¡ADVERTENCIA!: Revise los datos.", Toast.LENGTH_LONG).show(); //MENSAJE DE FALLA
             }
         }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();// RECOGE TODOS LOS DATOS INGRESADOS Y LOS ENVIA A LA BASE DE DATOS ("variableDeBD", variableRecogida)
                 params.put("TipoSangre", TipoSangre);
                 params.put("Peso", EnviaPeso);
                 params.put("Altura", EnviaAltura);
@@ -181,55 +181,55 @@ public class sorteo extends AppCompatActivity {
     }
 
     //EN ESTE METODO SE TOMARAN LOS DATOS INGRESADOS EN EL METODO ANTERIOR Y SE INGRESARAN A LA BASE DE DATOS
+    //RECIBE: datos String y Float recogidos de campos EditText para actualizar reserva || ENVIA: Mapa HashMap hacia el script PHP para guardado en BD
     private void updateUser(String xd) {
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
         String URL = "http://192.168.56.1/android/edit.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {//PREPARA LOS DATOS PARA REDIRECCIONAMIENTO A SCRIPT
             @Override
             public void onResponse(String response) {
-                Toast.makeText(sorteo.this, "¡EXITO!: Se ha actualizado el numero de celular", Toast.LENGTH_LONG).show();
+                Toast.makeText(sorteo.this, "¡EXITO!: Se ha actualizado el numero de celular", Toast.LENGTH_LONG).show(); //MENSAJE DE EXITO
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(sorteo.this, "¡ADVERTENCIA!: Revise los datos.", Toast.LENGTH_LONG).show();
+                Toast.makeText(sorteo.this, "¡ADVERTENCIA!: Revise los datos.", Toast.LENGTH_LONG).show(); //MENSAJE DE ERROR
             }
         }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();// RECOGE TODOS LOS DATOS INGRESADOS Y LOS ENVIA A LA BASE DE DATOS ("variableDeBD", variableRecogida)
                 params.put("Num_Tel", Num_Tel);
                 params.put("CURP_Res", objR.EnviaCurp);
                 return params;
             }
         };
-        requestQueue.add(stringRequest);
+        requestQueue.add(stringRequest); //MANDA LA SOLICITUD YA PREPARADA AL SCRIPT
     }
 
     //RECOGE LOS DATOS DE LA BASE DE DATOS PARA SU MUESTREO PARA MOSTRAR LOS RESULTADOS EN CASO DE SER ENCUADRADO O RESERVA
-    public void readUser1 (String xd) {
+    public void readUser1 (String xd) {//RECIBE: Matricula del usuario que inició sesion (String) || ENVIA: conjunto de datos producto de una consulta SQL
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION LLEVANDO COMO PARAMETRO LA CURP
         String URL = "http://192.168.56.1/android/fetchsorteo.php?curp=" + objR.EnviaCurp;
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONArray response) { //METODO EN CASO DE QUE EXISTA EL CAMPO REQUERIDO EN BD
                 JSONObject jsonObject = null;
-                for (int x = 0; x < response.length(); x++) {
-                    System.out.println("a ");
-                    try {
-                        jsonObject = response.getJSONObject(x);
-                        Matricula.setText(jsonObject.getString("Matricula_Enc"));
+                for (int x = 0; x < response.length(); x++) { //RECORRE EL ARRAY JSON CON LOS DATOS
+                    try { //PARA ENCUADRADO
+                        jsonObject = response.getJSONObject(x); //GUARDA EN UN OBJETO PARA SER LEIDO
+                        Matricula.setText(jsonObject.getString("Matricula_Enc")); //RECOGE LOS DATOS DE LA COLUMNA INDICADA Y LOS INGRESA EN CAMPOS TEXTVIEW
                         Nombre.setText(jsonObject.getString("Nombres_Enc"));
                         Apellidop.setText(jsonObject.getString("ApellidoPat_Enc"));
                         Apellidom.setText(jsonObject.getString("ApellidoMat_Enc"));
                         ConsultaMatricula = jsonObject.getString("Matricula_Enc");
-                        readUser2(ConsultaMatricula);
+                        readUser2(ConsultaMatricula); //MANDA A LLAMAR METODO COMPLEMENTARIO CON LA MISMA FUNCION PERO CONSULTANDO EL NUMERO DE LIBERACION
                     } catch (JSONException e) {
                         Toast.makeText(sorteo.this, "¡ADVERTENCIA!: Revise los datos.", Toast.LENGTH_LONG).show();
                     }
-                    try {
+                    try {//PARA RESERVA, HACIENDO LA MISMA FUNCION
                         jsonObject = response.getJSONObject(x);
                         Matricula.setText(jsonObject.getString("Matricula_Res"));
                         Nombre.setText(jsonObject.getString("Nombres_Res"));
@@ -248,6 +248,7 @@ public class sorteo extends AppCompatActivity {
                 Toast.makeText(sorteo.this, "¡ADVERTENCIA!: Revise los datos.", Toast.LENGTH_LONG).show();
             }
         });
+        //MANDA A LLAMAR EL SCRIPT PHP
         requestQueue=Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }

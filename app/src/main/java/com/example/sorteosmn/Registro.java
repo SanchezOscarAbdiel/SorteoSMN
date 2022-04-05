@@ -81,7 +81,7 @@ public class Registro extends AppCompatActivity {
     }
 
     //METODOS PARA INGRESO DE DATOS A SPINNERS (MENUS DESPLEGABLES) EN BASE A TXT
-    public void colonia (String xd){
+    public void colonia (String xd){  //RECIBE: Valores estaticos guardados en un documento .txt || ENVIA: Listado de datos en forma de Spinner
         //SE LLAMA A LOS EDITTEXT DECLARADOS EN EL ENTORNO GLOBAL PARA EXTRAER LOS DATOS INGRESADOS
         requestQueue = Volley.newRequestQueue(this);
         spinner = (Spinner) findViewById(R.id.spColonia);
@@ -92,39 +92,40 @@ public class Registro extends AppCompatActivity {
         //INICIA LA RECOGIDA DE DATOS DESDE EL TXT Y LOS INGRESA AL SPINNER
         InputStream is = this.getResources().openRawResource(R.raw.colonias);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        if (is != null) {
+        if (is != null) { //Mientras el renglon no esté vacio se recogerá el texto y se guardará (Linea 98)
             while (true) {
                 try {
                     if (!((linea = reader.readLine()) != null)) break;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                spin.add(linea.split(",")[0]);
+                spin.add(linea.split(",")[0]); //Se agrega un nuevo renglon en el Spinner cada vez que se encuentre una coma
             }
         }
         try {
-            is.close();
+            is.close(); //Cierra el documento y el metodo
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String datos[] = spin.toArray(new String[spin.size()]);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, datos);
-        spinner.setAdapter(adapter);
+        String datos[] = spin.toArray(new String[spin.size()]); //Forma un Array de datos recogiendo el tamaño del Spinner para su correcto llenado
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, datos); //Forma y prepara un objeto compatible con un Spinner
+        spinner.setAdapter(adapter); //Toma el objeto de la linea pasada ya lleno de datos y los asigna al Spinner para su muestreo
 
     }
 
     //LLENADO DE LOS SPINNERS PARA ESTADOCIVIL Y DISCAPACIDAD A PARTIR DE ARCHIVOS XML
-    public void EstadoCivil(String xd) { //rellena spinner
-        ArrayAdapter<CharSequence> adapterE = ArrayAdapter.createFromResource(this, R.array.combo_Estado, android.R.layout.simple_spinner_item);
-        spEstadoc.setAdapter(adapterE);
+    public void EstadoCivil(String xd) { //Recibe: caracteres almacenados en archivos XML || Envia:  Listado de datos en forma de Spinner
+        ArrayAdapter<CharSequence> adapterE = ArrayAdapter.createFromResource(this, R.array.combo_Estado, android.R.layout.simple_spinner_item); /*TOMA los renglones
+        almacenados en la clase mencionada en "R.array" y los guarda en un objeto Array*/
+        spEstadoc.setAdapter(adapterE); //ASIGNA el objeto array al spinner correspondiente
     }
-    public void Discapacidad(String xd) { //rellena spinner
+    public void Discapacidad(String xd) { ////Recibe: caracteres almacenados en archivos XML || Envia:  Listado de datos en forma de Spinner
         ArrayAdapter<CharSequence> adapterE = ArrayAdapter.createFromResource(this, R.array.combo_discapacidad, android.R.layout.simple_spinner_item);
         Discapacidad.setAdapter(adapterE);
     }
 
     //INSERCION EN BASE DE DATOS
-    public void createUser(View view){
+    public void createUser(View view){ //RECIBE: caracteres String almacenados en campos EditText y Spinners || ENVIA: Objeto tipo HashMap con datos etiquetados hacia la BD
         //SE LLAMA A LOS EDITTEXT DECLARADOS EN EL ENTORNO GLOBAL PARA EXTRAER LOS DATOS INGRESADOS
         nombre = Nombre.getText().toString();
         apellidop=ApellidoP.getText().toString();
@@ -141,7 +142,7 @@ public class Registro extends AppCompatActivity {
         Sexo1 = Sexo.getCheckedRadioButtonId();
         Masculino = findViewById(Sexo1);
         sexo = Masculino.getText().toString();
-        if (sexo == "(M) Masculino") {
+        if (sexo == "(M) Masculino") { //TOMA EL TEXTO DEL RADIO BUTTON Y LO REDEFINE
             sexo = "F";
         } else {
             sexo = "M";
@@ -154,7 +155,7 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(Registro.this, "¡EXITO AL REALIZAR EL REGISTRO!, FELICIDADES", Toast.LENGTH_LONG).show();
-                readUser(null);
+                readUser(null);//MANDA LLAMAR EL METODO ENCARGADO DE MUESTREO DE DATOS PARA EL USUARIO
             }
         }, new Response.ErrorListener() {
             @Override
@@ -165,7 +166,7 @@ public class Registro extends AppCompatActivity {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
+                Map<String,String> params = new HashMap<>(); // RECOGE TODOS LOS DATOS INGRESADOS Y LOS ENVIA A LA BASE DE DATOS ("variableDeBD", variableRecogida)
                 params.put("nombre", nombre);
                 params.put("apellidop", apellidop);
                 params.put("apellidom", apellidom);
@@ -184,7 +185,7 @@ public class Registro extends AppCompatActivity {
                 return params;
             }
         };
-        requestQueue.add(stringRequest);
+        requestQueue.add(stringRequest); //MANDA LLAMAR A LA BD
     }
 
     //METODO PARA MOSTRAR EL RESULTADO DEL SORTEO (BOLA BLANCA O BOLA NEGRA)
@@ -204,7 +205,8 @@ public class Registro extends AppCompatActivity {
     }
 
     //METODO PARA MOSTRAR LOS DATOS NECESARIOS EN LA HOJA DEL ASPIRANTE A MODO DE RESUMEN
-    private void readUser(String xd) {
+    private void readUser(String xd) { //RECIBE: curp del Aspirante mediante un String recogido de la clase sorteo; objeto JSON con datos recibidos de MYSQL
+                                      // ENVIA: objeto HASH hacia la BD
         //SE ESTABLECE LA CONEXION CON LA BASE DE DATOS PARA LA RECOGIDA DE LOS DATOS Y SE PASA COMO PARAMETRO LA CURP DEL ASPIRANTE
         String URL = "http://192.168.56.1/android/fetch1.php?curp=" + curp;
         //EN ESTE METODO SE CAPTURAN LOS RESULTADOS DE LA CONULTA ANTERIOR Y SE TRATA LA INFORMACION CON OBJETOS JSON
@@ -212,23 +214,21 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
-                for (int x = 0; x < response.length(); x++) {
-                    try {
-                        jsonObject = response.getJSONObject(x);
+                for (int x = 0; x < response.length(); x++) { //recorre el array para su completa impresion
+                    try {//para encuadrado
+                        jsonObject = response.getJSONObject(x); //toma el renglon del array y se guarda en variables string
                         EnviaMatricula = jsonObject.getString("Matricula_Enc");
                         EnviaCurp = jsonObject.getString("CURP_Enc");
                         Reserva = false;
-                        PopUp("Blanca");
+                        PopUp("Blanca"); //manda a llamar un metodo para su muestreo en pantalla
                     } catch (JSONException e) {
-                        //Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
                     }
-                    try {
-                        jsonObject = response.getJSONObject(x);
+                    try {//para reserva
+                        jsonObject = response.getJSONObject(x);//toma el renglon del array y se guarda en variables string
                         EnviaMatricula = jsonObject.getString("Matricula_Res");
                         EnviaCurp = jsonObject.getString("CURP_Res");
                         PopUp("Negra");
-                    } catch (JSONException e) {
-                        //Toast.makeText(Registro.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {//manda a llamar un metodo para su muestreo en pantalla
                     }
                 }
             }
