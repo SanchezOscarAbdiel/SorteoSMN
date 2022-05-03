@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class panelControl extends AppCompatActivity {
+    public static sorteo objIP = new sorteo();
+    public static String IP = objIP.IP;
+
 
     //VARIABLES DE ENTRONO GLOBAL
     Login objL = new Login();
@@ -53,7 +56,7 @@ public class panelControl extends AppCompatActivity {
     //CONSULTA LAS NOTICIAS ALOJADAS EN LA BD Y LAS LISTA
     public void LeeNoticias(View view){
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
-        String URL = "http://192.168.56.1/android/fetchnoticias.php";
+        String URL = "http://"+IP+"/android/fetchnoticias.php";
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -108,7 +111,7 @@ public class panelControl extends AppCompatActivity {
     // METODO PARA ENLISTAR LA TABLA ELEGIDA EN EL METODO ANTERIOR (ENCUADRADO O RESERVA)
     public void LeeEncuadrado(String tipo){
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION, LLEVANDO COMO PARAMETRO EL TIPO DE ADSCRITO
-        String URL = "http://192.168.56.1/android/fetchEncuadrado.php?tabla="+tipo;
+        String URL = "http://"+IP+"/android/fetchEncuadrado.php?tabla="+tipo;
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -141,7 +144,7 @@ public class panelControl extends AppCompatActivity {
         Cuerpo.setText("");
         etTitulo.setText("");
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
-        String URL = "http://192.168.56.1/android/fetchFaltas.php";
+        String URL = "http://"+IP+"/android/fetchFaltas.php";
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -206,7 +209,7 @@ public class panelControl extends AppCompatActivity {
     //METODO PARA HACER EFECTIBA LA BAJA MEDIANTE LA CONSULTA SQL CON LA MATRICULA RECOGIDA ANTERIORMENTE
     private void updateBaja(String matricula) {//RECIBE: matricula del encuadrado (String mediante editText) || ENVIA: HashMap hacia script PHP para actualizacion de BD
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
-        String URL ="http://192.168.56.1/android/editBaja.php";
+        String URL ="http://"+IP+"/android/editBaja.php";
         StringRequest stringRequest =new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -240,7 +243,7 @@ public class panelControl extends AppCompatActivity {
         //EN EL destinatario SE RECOGE A QUIEN IRA ENVIADA LA NOTICIA CON 3 POSIBILIDADES: Encuadrado, Reserva o General
         if(destinatario.equalsIgnoreCase("General") || destinatario.equalsIgnoreCase("Encuadrado") || destinatario.equalsIgnoreCase("Reserva")){
             //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION, LLEVANDO COMO PARAMETROEL TITULO, CUERPO Y DESTINATARIO
-            String url = "http://192.168.56.1/android/saveNoticias.php?titulo=" + titulo + "&cuerpo=" + Mensaje + "&destinatario=" + destinatario;
+            String url = "http://"+IP+"/android/saveNoticias.php?titulo=" + titulo + "&cuerpo=" + Mensaje + "&destinatario=" + destinatario;
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {

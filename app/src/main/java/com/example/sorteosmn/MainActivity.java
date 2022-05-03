@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 //MENU PRINCIPAL DE LA APLICACION (DONDE SE UBICAN LOS BOTONES PRINCIPALES)
 public class MainActivity extends AppCompatActivity {
+    public static sorteo objIP = new sorteo();
+    public static String IP = objIP.IP;
 
     //LLAMADO GENERAL A SQL
     RequestQueue requestQueue;
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     //METODO PARA CONSULTAR LA INFORMACION DEL ENCUADRADO O RESERVA EN EL PERFIL
     public void consultaUsuario(String xd) {
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION, LLEVANDO COMO PARAMETRO LA MATRICULA
-        String URL = "http://192.168.56.1/android/fetchMainA.php?matricula=" + objL.Matricula;
+        String URL = "http://"+IP+"/android/fetchMainA.php?matricula=" + objL.Matricula;
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -181,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         //TRAER LOS DATOS DEL ESCUADRON DEL ENCUADRADO (TABLA ESCUADRON)
     public void consultaEscuadronE(String xd){
         //LLAMADA AL METODO SQL PARA HACER LA CONSULTA ADECUADA LLEVANDO COMO PARAMETRO LA MATRICULA DEL ENCUADRADO
-        String URL = "http://192.168.56.1/android/fetchMainAescuadron.php?matricula=" + objL.Matricula;
+        String URL = "http://"+IP+"/android/fetchMainAescuadron.php?matricula=" + objL.Matricula;
         //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -219,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         //TRAER LOS DATOS DEL NUMERO DE LIBERACION DE LA CARTILLA (TABLA CARTILLA)
     public void consultaEscuadronE2(String xd) {
         //LLAMADA AL METODO SQL PARA HACER LA CONSULTA ADECUADA LLEVANDO COMO PARAMETRO LA MATRICULA DEL ENCUADRADO
-        String URL = "http://192.168.56.1/android/fetchMainAescuadron2.php?matricula=" + objL.Matricula;
+        String URL = "http://"+IP+"/android/fetchMainAescuadron2.php?matricula=" + objL.Matricula;
         //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -247,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         //TRAER LOS DATOS DEL INSTRUCTOR SEGUN EL ESCUADRON (TABLA INSTRUCTOR)
     public void consultaEscuadronE3(String xd){
         //LLAMADA AL METODO SQL PARA HACER LA CONSULTA ADECUADA LLEVANDO COMO PARAMETRO LA PLACA DEL INSTRUCTOR
-        String URL = "http://192.168.56.1/android/fetchMainAescuadron3.php?placa=" + Num_Placa;
+        String URL = "http://"+IP+"/android/fetchMainAescuadron3.php?placa=" + Num_Placa;
         //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -326,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
     //METODO PARA MOSTRAR LOS ANUNCIOS/NOTICIAS EN BASE DE SER UN ENCUADRADO/RESERVA
     public void LeeEncuadrado(String xd) {
         //LLAMADO AL METODO SQL PARA HACER LA SELECCION DE LAS NOTICIAS
-        String URL = "http://192.168.56.1/android/fetchNoticiasE.php?tipoA=" + objL.tipoA;
+        String URL = "http://"+IP+"/android/fetchNoticiasE.php?tipoA=" + objL.tipoA;
         //INICIA EL TRATAMIENTO DE LA INFORAMCION CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override

@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Login extends AppCompatActivity{
+    public static sorteo objIP = new sorteo();
+    public static String IP = objIP.IP;
 
     //23 y 24 INICIAN EL LLAMADO A LOS METODOS DE PHP PARA EL LOGEO
     RequestQueue requestQueue;
@@ -52,7 +54,7 @@ public class Login extends AppCompatActivity{
         desvio = 1;
 
         //SE ESTABLECE LA CONEXION CON LA BASE DE DATOS Y LLEVA LAS VARIABLES HACIA UNA CONSULTA PARA VERIFICAR SU EXISTENCIA
-        String URL = "http://192.168.56.1/android/fetchlogin.php?matricula=" + Matricula + "&correo=" + Correo;
+        String URL = "http://"+IP+"/android/fetchlogin.php?matricula=" + Matricula + "&correo=" + Correo;
 
         //EN ESTE METODO SE CAPTURAN LOS RESULTADOS DE LA CONULTA ANTERIOR Y SE TRATA LA INFORMACION CON OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {

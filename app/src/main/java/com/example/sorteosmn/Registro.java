@@ -37,9 +37,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Registro extends AppCompatActivity {
+
+    public static sorteo objIP = new sorteo();
+    public static String IP = objIP.IP;
+
     //LLAMADA GENERAL A SQL
     RequestQueue requestQueue;
-    public static final String url = "http://192.168.56.1/android/save.php";
+    public static final String url = "http://"+IP+"/android/save.php";
     //ELEMENTOS DE INTERFAZ PARA LA CAPTURA DE DATOS
     public Spinner spinner;
     public Spinner spEstadoc;
@@ -208,7 +212,7 @@ public class Registro extends AppCompatActivity {
     private void readUser(String xd) { //RECIBE: curp del Aspirante mediante un String recogido de la clase sorteo; objeto JSON con datos recibidos de MYSQL
                                       // ENVIA: objeto HASH hacia la BD
         //SE ESTABLECE LA CONEXION CON LA BASE DE DATOS PARA LA RECOGIDA DE LOS DATOS Y SE PASA COMO PARAMETRO LA CURP DEL ASPIRANTE
-        String URL = "http://192.168.56.1/android/fetch1.php?curp=" + curp;
+        String URL = "http://"+IP+"/android/fetch1.php?curp=" + curp;
         //EN ESTE METODO SE CAPTURAN LOS RESULTADOS DE LA CONULTA ANTERIOR Y SE TRATA LA INFORMACION CON OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override

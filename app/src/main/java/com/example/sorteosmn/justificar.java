@@ -29,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class justificar extends AppCompatActivity {
+    public static sorteo objIP = new sorteo();
+    public static String IP = objIP.IP;
 
     //LLAMADA A METODOS SQL DE LOGEO
     RequestQueue requestQueue;
@@ -76,7 +78,7 @@ public class justificar extends AppCompatActivity {
     //CUENTA LA CANTIDAD DE JUSTIFICACIONES QUE HA SUBIDO EL ENCUADRADO
     public void funa(String xd) {
         //SE LLAMA AL METODO SQL QUE REALIZARA LA CONSULTA EN LA TABLA CORRESPONDIENTE LLEVANDO COMO PARAMETRO LA MATRICULA
-        String URL = "http://192.168.56.1/android/cuentaJ.php?Matricula_Enc=" + Matricula117;
+        String URL = "http://"+IP+"/android/cuentaJ.php?Matricula_Enc=" + Matricula117;
         //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -106,7 +108,7 @@ public class justificar extends AppCompatActivity {
     public void InsertaJ(String xd) {
         //SE HACE EL LLAMADO A SQL PARA INSERTAR LOS DATOS CORRESPONDIENTES EN LA TABLA INDICADA
         System.out.println("Prueba justifica"+link);
-        String url = "http://192.168.56.1/android/saveJustifica.php?Matricula_Enc="+Matricula117+"&L_DocJust="+link;
+        String url = "http://"+IP+"/android/saveJustifica.php?Matricula_Enc="+Matricula117+"&L_DocJust="+link;
         //HACE LA INSERCION A LA TABLA DE JUSTIFICACIONES UNA VEZ REALIZADO EL LLAMADO A SQL
         StringRequest stringRequest = new StringRequest(
             Request.Method.POST, url, new Response.Listener<String>() {
