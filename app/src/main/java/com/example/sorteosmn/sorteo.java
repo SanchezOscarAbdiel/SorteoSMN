@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class sorteo extends AppCompatActivity {
-    public static String IP ="192.168.56.1";
+    public static String IP ="192.168.100.7";
 
     //LLAMADA GENERAL A SQL
     RequestQueue requestQueue;

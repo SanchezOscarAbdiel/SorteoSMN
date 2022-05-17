@@ -72,6 +72,22 @@
             android:text="Info Cuartel"
             android:textColor="#0C0C0C"
             android:textSize="24sp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnLogOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="318dp"
+            android:layout_marginRight="318dp"
+            android:backgroundTintMode="add"
+            android:clickable="true"
+            android:foregroundTint="#FFFFFF"
+            android:onClick="CierraSesion"
+            android:tint="#FD0303"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/binfoc"
+            app:srcCompat="@android:drawable/ic_delete" />
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

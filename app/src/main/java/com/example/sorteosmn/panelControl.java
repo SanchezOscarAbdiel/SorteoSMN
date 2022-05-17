@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class panelControl extends AppCompatActivity {
+
     public static sorteo objIP = new sorteo();
     public static String IP = objIP.IP;
 
@@ -67,6 +68,8 @@ public class panelControl extends AppCompatActivity {
                         jsonObject = response.getJSONObject(x);
                         etTitulo.setText(jsonObject.getString("titulo"));
                         Cuerpo.setText(jsonObject.getString("cuerpo"));
+
+
                     } catch (JSONException e) {
                         Toast.makeText(panelControl.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
@@ -270,6 +273,21 @@ public class panelControl extends AppCompatActivity {
         }else{
             Toast.makeText(panelControl.this,"¡ERROR!: Revise el destinatario" ,Toast.LENGTH_LONG).show();
         }
+    }
+    //LIMPIA VARIABLES Y REINICIA PANTALLAS PARA LLEVAR AL USUARIO DE NUEVO AL INICIO DE SESION
+    public void CierraSesionAdmin(View view){
+        objL.tipoA ="";
+
+        Toast.makeText(panelControl.this, "CERRANDO SESION...\nHASTA LUEGO", Toast.LENGTH_LONG).show();
+        finish();
+        startActivity(getIntent());
+        Intent v1 = new Intent(this, Login.class);
+        startActivity(v1);
+    }
+
+    //EVITA QUE SE CIERRE LA APLICACION SIN EL METODO ADECUADO
+    public void onBackPressed(){
+        Toast.makeText(panelControl.this, "PARA CERRAR SESION \nTOQUE EL BOTON CORRESPONDIENTE", Toast.LENGTH_LONG).show();
     }
 
 }

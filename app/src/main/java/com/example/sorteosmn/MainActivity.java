@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //IMPORT: ELEMENTOS PARA EL TRATAMIENTO DE DATOS EN LA APLICACIÓN CON FORMATO JSON (ARRAY DE ELEMENTOS)
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,9 +34,10 @@ public class MainActivity extends AppCompatActivity {
     public static String acumulaTitulo, acumulaCuerpo, acumulaDestino, total;
     String matricula = objL.Matricula, CURP = "", Nombres = "", ApellidoPat = "", ApellidoMat = "", Correo = "", Num_Tel = "";
     String Num_Placa = "", Num_Seccion = "", Num_Liberacion = "", Fecha_Recepcion = "", Nombre_Ins = "", ApellidoPat_Ins = "", ApellidoMat_Ins = "";
-    int enseña = 0;
+    int enseña = 0,ContadorNoticias;
     //LLAMADA A LOS ELEMENTOS DE LA INTERFAZ DE LOGEO EN DONDE SE INTRODUCEN LOS DATOS
     Button Bperfil, Bescuadron, Bnoticias;
+    FloatingActionButton btnCerrarSesion;
     TextView Usuario, tipo;
 
     @Override
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         tipo = (TextView) findViewById(R.id.tvTipoP2);
         Usuario.setText(objL.Correo);
         tipo.setText(objL.tipoA);
+        //IDENTIFICA BOTON PARA CERRAR SESION
+        btnCerrarSesion = (FloatingActionButton) findViewById(R.id.btnLogOut);
         //LLAMADA AL METODO CONSULTA USUARIO
         consultaUsuario(null);
         //RECOGIDA DE DATOS DE LOS ELEMENTOS DE LA INTERFAZ EN VARIABLES
@@ -90,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LeeEncuadrado(null);
-                popUpNoticias(total);
             }
         });
     }
@@ -340,11 +343,18 @@ public class MainActivity extends AppCompatActivity {
                         acumulaTitulo = jsonObject.getString("titulo") + "\n";
                         acumulaCuerpo = jsonObject.getString("cuerpo") + "\n";
                         acumulaDestino = jsonObject.getString("destinatario") + "\n";
-                        total = total + acumulaTitulo + acumulaCuerpo + acumulaDestino + "\n";
+                        //AL ESTAR X=0 NO ACUMULA EL PRIMER "TOTAL" EVITANDO LA IMPRESION DE UN NULL
+                        if(x==0){
+                        total = acumulaTitulo + acumulaCuerpo + acumulaDestino + "\n";
+                        }else if(x>0){
+                            total = total + acumulaTitulo + acumulaCuerpo + acumulaDestino + "\n";
+                        }
                     } catch (JSONException e) {
                         Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
+                //TOMA TODAS LAS NOTICIAS ACUMULADAS Y LAS MANDA A UN POPUP PARA SU IMPRESION
+                popUpNoticias(total);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -359,6 +369,7 @@ public class MainActivity extends AppCompatActivity {
     //METODO PARA EL MUESTREO DE LAS NOTICIAS MEDIANTE UN POPUP
     public void popUpNoticias(String total) {
         AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
+
         alerta.setMessage(total).setCancelable(false)
                 .setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
                     @Override
@@ -401,6 +412,22 @@ public class MainActivity extends AppCompatActivity {
     public void pasaV3 (View view) {
         Intent v1 =new Intent(this,justificar.class);
         startActivity(v1);
+    }
+
+    //LIMPIA VARIABLES Y REINICIA PANTALLAS PARA LLEVAR AL USUARIO DE NUEVO AL INICIO DE SESION
+    public void CierraSesion (View view) {
+    objL.tipoA ="";
+    total ="";
+        Toast.makeText(MainActivity.this, "CERRANDO SESION...\nHASTA LUEGO", Toast.LENGTH_LONG).show();
+        finish();
+        startActivity(getIntent());
+        Intent v1 = new Intent(this, Login.class);
+        startActivity(v1);
+    }
+
+    //EVITA QUE SE CIERRE LA APLICACION SIN EL METODO ADECUADO
+    public void onBackPressed(){
+        Toast.makeText(MainActivity.this, "PARA CERRAR SESION \nTOQUE EL BOTON CORRESPONDIENTE", Toast.LENGTH_LONG).show();
     }
 
 }

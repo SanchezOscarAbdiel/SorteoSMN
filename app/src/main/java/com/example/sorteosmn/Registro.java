@@ -200,6 +200,7 @@ public class Registro extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         EnviaBola = bola;
+
                         pasaV6(null);
                     }
                 });

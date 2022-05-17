@@ -63,6 +63,14 @@
                 android:onClick="popUpBaja"
                 android:text="Bajas" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btbLogOutAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:onClick="CierraSesionAdmin"
+                app:srcCompat="@android:drawable/ic_delete" />
+
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

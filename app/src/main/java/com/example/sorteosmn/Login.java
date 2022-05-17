@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Login extends AppCompatActivity{
+
     public static sorteo objIP = new sorteo();
     public static String IP = objIP.IP;
 
@@ -31,7 +32,7 @@ public class Login extends AppCompatActivity{
     public static String Correo = "", Matricula, tipoA = "";
     public static int desvio = 0;
     //GUARDARA EL RESULTADO DE LA CONSULTA PARA OBTENER LOS DATOS VALIDOS DE LOGEO
-    String z = "";
+    public static String z = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,23 +64,29 @@ public class Login extends AppCompatActivity{
                 JSONObject jsonObject = null;
                 for (int x = 0; x < response.length(); x++) {
                     try {
+
+
                         //EN EL OBJETO response SE GUARDA EL RESULTADO DE LA CONSULTA
                         jsonObject = response.getJSONObject(x);
                         //SE CONVIERTE EN UN STRING PARA PODER ANALIZARLO
                         z = response.toString();
                         //DEPENDE DEL RESULTADO DEL ANALISIS DEL STRING INICIARA SESION COMO UN DETERMINADO ROL
                         if (((z.charAt(7)) == ('D')) && (z.charAt(8)) == ('-')) {
-                            pasaV3();
+
                             tipoA = "Encuadrado";
-                        } else if (((z.charAt(7)) == ('D')) && (z.charAt(8)) != ('-')) {
                             pasaV3();
+                        } else if (((z.charAt(7)) == ('D')) && (z.charAt(8)) != ('-')) {
+
                             tipoA = "Reserva";
+                            pasaV3();
                         } else if (((z.charAt(7)) == ('A'))) {
-                            pasaV4();
+
                             tipoA = "Admin";
+                            pasaV4();
                         }
                     } catch (JSONException e) {
-                        Toast.makeText(Login.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Login.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
+
                     }
                 }
             }
