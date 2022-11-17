@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,9 +9,16 @@
 
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="374dp"
-        android:layout_height="544dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="451dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="182dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="98dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,21 +80,6 @@
             android:textColor="#0C0C0C"
             android:textSize="24sp" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnLogOut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="318dp"
-            android:layout_marginRight="318dp"
-            android:backgroundTintMode="add"
-            android:clickable="true"
-            android:foregroundTint="#FFFFFF"
-            android:onClick="CierraSesion"
-            android:tint="#FD0303"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/binfoc"
-            app:srcCompat="@android:drawable/ic_delete" />
-
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -126,8 +118,9 @@
         android:id="@+id/imageView5"
         android:layout_width="515dp"
         android:layout_height="87dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="1dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="569dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintTop_toBottomOf="@+id/tvTipoP"
@@ -139,7 +132,11 @@
         android:id="@+id/imageView6"
         android:layout_width="79dp"
         android:layout_height="74dp"
+        android:layout_alignBottom="@+id/imageView5"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="50dp"
+        android:layout_marginEnd="281dp"
+        android:layout_marginBottom="7dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
         app:layout_constraintVertical_bias="1.0"
@@ -147,25 +144,14 @@
         tools:layout_editor_absoluteX="43dp" />
 
     <TextView
-        android:id="@+id/tvTipoP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="200dp"
-        android:text="------------"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:layout_constraintVertical_bias="0.466" />
-
-    <TextView
         android:id="@+id/tvTipoP2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView5"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="100dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginBottom="13dp"
         android:text="------------"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
@@ -173,4 +159,36 @@
         app:layout_constraintStart_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/tvTipoP" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvTipoP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="166dp"
+        android:layout_marginBottom="622dp"
+        android:text="------------"
+        android:textSize="24sp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnLogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="178dp"
+        android:layout_marginTop="654dp"
+        android:layout_marginRight="318dp"
+        android:layout_marginBottom="21dp"
+        android:backgroundTintMode="add"
+        android:clickable="true"
+        android:foregroundTint="#FFFFFF"
+        android:onClick="CierraSesion"
+        android:tint="#FD0303"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/binfoc"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+</RelativeLayout>

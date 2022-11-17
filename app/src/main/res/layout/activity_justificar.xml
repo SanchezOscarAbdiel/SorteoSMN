@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tvIntentos"
@@ -25,9 +25,8 @@
 
         <TextView
             android:id="@+id/txtJus1"
-            android:layout_width="345dp"
-            android:layout_height="86dp"
-            android:layout_marginStart="24dp"
+            android:layout_width="326dp"
+            android:layout_height="71dp"
             android:layout_marginTop="28dp"
             android:layout_marginBottom="41dp"
             android:text="APARTADO PARA SUBIR DOCUMENTOS DE JUSTIFICACION DE FALTAS"
@@ -35,24 +34,10 @@
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2"
             app:layout_constraintVertical_bias="0.253" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/binfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="26dp"
-            android:layout_marginEnd="313dp"
-            android:layout_marginBottom="40dp"
-            android:clickable="true"
-            android:onClick="PopUpInfo"
-            app:backgroundTint="#4CAF50"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_info_details" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -116,43 +101,54 @@
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/boligrafo_de_bloc_de_notas" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="417dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="47dp"
-        android:background="@drawable/top_edit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView30"
-            android:layout_width="104dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="            "
-            tools:layout_editor_absoluteX="90dp"
-            tools:layout_editor_absoluteY="376dp" />
-
-        <TextView
-            android:id="@+id/tjust"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="57dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="119dp"
-            android:layout_marginBottom="16dp"
-            android:text="Justificación de Faltas"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="417dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/top_edit"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="            "
+                tools:layout_editor_absoluteX="90dp"
+                tools:layout_editor_absoluteY="376dp" />
+
+            <TextView
+                android:id="@+id/tjust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="16dp"
+                android:text="Justificación de Faltas"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/binfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginBottom="7dp"
+        android:clickable="true"
+        android:onClick="PopUpInfo"
+        app:backgroundTint="#4CAF50"
+        app:srcCompat="@android:drawable/ic_menu_info_details"
+        tools:layout_editor_absoluteX="178dp" />
+
+</RelativeLayout>
