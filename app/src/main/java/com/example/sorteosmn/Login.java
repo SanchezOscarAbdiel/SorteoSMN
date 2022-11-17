@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,11 +29,13 @@ public class Login extends AppCompatActivity{
 
     //LLAMADA A LOS ELEMENTOS DE LA INTERFAZ DE LOGEO EN DONDE SE INTRODUCEN LOS DATOS
     EditText correo, matricula;
+    private ProgressBar progressBar;
     //VARIABLES QUE ALMACENAN LOS DATOS RECIBIDOS EN LOS EDITTEXT
     public static String Correo = "", Matricula, tipoA = "";
     public static int desvio = 0;
     //GUARDARA EL RESULTADO DE LA CONSULTA PARA OBTENER LOS DATOS VALIDOS DE LOGEO
     public static String z = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,9 @@ public class Login extends AppCompatActivity{
         setContentView(R.layout.activity_login);
         correo = (EditText) findViewById(R.id.id_user);
         matricula = (EditText) findViewById(R.id.id_contra);
+        progressBar = (ProgressBar) findViewById(R.id.PBlogin);
+        progressBar.setVisibility(View.GONE);
+
     }
 
     /* EN ESTE METODO SE REVISA SI LOS DATOS INGRESADOS EXISTEN
@@ -47,6 +53,8 @@ public class Login extends AppCompatActivity{
        Y TAMBIEN DETECTA EN BASE A LO QUE SE HAYA INSERTADO EN EL USUARIO
        SI ES UN ENCUADRADO, RESERVA O INSTRUCTOR */
     public void readUser(View view) {
+        //SE MANDA LLAMAR LA PANTALLA DE CARGA DANDO A ENTENDER QUE SE HA INICIADO UN PROCESO
+        progressBar.setVisibility(View.VISIBLE);
 
         //SE LLAMA A LOS EDITTEXT DECLARADOS EN EL ENTORNO GLOBAL PARA EXTRAER LOS DATOS INGRESADOS
         Correo = correo.getText().toString();
@@ -74,14 +82,17 @@ public class Login extends AppCompatActivity{
                         if (((z.charAt(7)) == ('D')) && (z.charAt(8)) == ('-')) {
 
                             tipoA = "Encuadrado";
+                            progressBar.setVisibility(View.GONE);
                             pasaV3();
                         } else if (((z.charAt(7)) == ('D')) && (z.charAt(8)) != ('-')) {
 
                             tipoA = "Reserva";
+                            progressBar.setVisibility(View.GONE);
                             pasaV3();
                         } else if (((z.charAt(7)) == ('A'))) {
 
                             tipoA = "Admin";
+                            progressBar.setVisibility(View.GONE);
                             pasaV4();
                         }
                     } catch (JSONException e) {
@@ -93,6 +104,7 @@ public class Login extends AppCompatActivity{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(Login.this, "¡ERROR AL INICIAR!: Revise sus datos de inicio.", Toast.LENGTH_LONG).show();
             }
         });

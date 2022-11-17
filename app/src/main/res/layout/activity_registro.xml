@@ -113,7 +113,7 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="EDAD:"
+                    android:text="Edad:"
                     android:textColor="#FDFCFC" />
 
                 <EditText
@@ -131,7 +131,7 @@
                     android:id="@+id/textView9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Num_EXT:"
+                    android:text="Numero Exterior:"
                     android:textColor="#FDFCFC" />
 
                 <EditText
@@ -149,7 +149,7 @@
                     android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Numero_INT:"
+                    android:text="Numero Interior:"
                     android:textColor="#FDFCFC" />
 
                 <EditText
@@ -306,6 +306,17 @@
 
             </LinearLayout>
         </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/PBregistro"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="150dp"
+            android:max="100" />
 
     </RelativeLayout>
 

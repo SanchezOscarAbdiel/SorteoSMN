@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -39,6 +40,8 @@ public class panelControl extends AppCompatActivity {
     EditText etAdmin, etTitulo, Cuerpo, destino;
     //LLAMADO GENERAL A SQL
     RequestQueue requestQueue;
+    //BARRA DE PROGRESO
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +55,13 @@ public class panelControl extends AppCompatActivity {
         Cuerpo = (EditText) findViewById(R.id.ed);
         etTitulo = (EditText) findViewById(R.id.edTituloN);
         destino = (EditText) findViewById(R.id.edDestinatario);
+        progressBar = (ProgressBar) findViewById(R.id.PBpanel);
+        progressBar.setVisibility(View.GONE);
     }
 
     //CONSULTA LAS NOTICIAS ALOJADAS EN LA BD Y LAS LISTA
     public void LeeNoticias(View view){
+        progressBar.setVisibility(View.VISIBLE);
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
         String URL = "http://"+IP+"/android/fetchnoticias.php";
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
@@ -69,7 +75,7 @@ public class panelControl extends AppCompatActivity {
                         etTitulo.setText(jsonObject.getString("titulo"));
                         Cuerpo.setText(jsonObject.getString("cuerpo"));
 
-
+                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException e) {
                         Toast.makeText(panelControl.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
@@ -113,6 +119,7 @@ public class panelControl extends AppCompatActivity {
 
     // METODO PARA ENLISTAR LA TABLA ELEGIDA EN EL METODO ANTERIOR (ENCUADRADO O RESERVA)
     public void LeeEncuadrado(String tipo){
+        progressBar.setVisibility(View.VISIBLE);
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION, LLEVANDO COMO PARAMETRO EL TIPO DE ADSCRITO
         String URL = "http://"+IP+"/android/fetchEncuadrado.php?tabla="+tipo;
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
@@ -126,6 +133,7 @@ public class panelControl extends AppCompatActivity {
                         etTitulo.setText("Listado de " + tipo);
                         acumula = jsonObject.getString("Matricula") + " " + jsonObject.getString("Nombre") + "\n";
                         Cuerpo.setText(Cuerpo.getText().toString() + acumula);
+                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException e) {
                         Toast.makeText(panelControl.this, "¡ADVERTENCIA!: Revise los datos, ERROR: " + e.getMessage() + ".", Toast.LENGTH_LONG).show();
                     }
@@ -143,6 +151,7 @@ public class panelControl extends AppCompatActivity {
 
     //METODO PARA ENLISTAR E IMPRIMIR LA TABLA DONDE SE UBICAN LOS JUSTIFICANTES DE LOS ENCUADRADOS
     public void LeeFaltas(View view){
+        progressBar.setVisibility(View.VISIBLE);
         //LIMPIEZA DE VARIABLES
         Cuerpo.setText("");
         etTitulo.setText("");
@@ -159,6 +168,7 @@ public class panelControl extends AppCompatActivity {
                         etTitulo.setText("Listado de encuadrados con faltas");
                         acumulaFaltas = jsonObject.getString("Matricula_Enc") + " " + jsonObject.getString("L_DocJust") + "\n";
                         Cuerpo.setText(Cuerpo.getText().toString() + acumulaFaltas);
+                        progressBar.setVisibility(View.GONE);
                     } catch (JSONException e) {
                         Toast.makeText(panelControl.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
@@ -211,16 +221,19 @@ public class panelControl extends AppCompatActivity {
 
     //METODO PARA HACER EFECTIBA LA BAJA MEDIANTE LA CONSULTA SQL CON LA MATRICULA RECOGIDA ANTERIORMENTE
     private void updateBaja(String matricula) {//RECIBE: matricula del encuadrado (String mediante editText) || ENVIA: HashMap hacia script PHP para actualizacion de BD
+        progressBar.setVisibility(View.VISIBLE);
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
         String URL ="http://"+IP+"/android/editBaja.php";
         StringRequest stringRequest =new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Toast.makeText(panelControl.this,"¡ATENCIÓN!: SE RESTRINGIO AL ENCUADRADO" ,Toast.LENGTH_LONG).show(); //MENSAJE DE EXITO
+                    progressBar.setVisibility(View.GONE);
                 }
             }, new Response.ErrorListener(){
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(panelControl.this,"¡ERROR!: REVISE LA MATRICULA INGRESADA" ,Toast.LENGTH_LONG).show(); //MENSAJE DE ERROR
                 }
             }
@@ -239,6 +252,7 @@ public class panelControl extends AppCompatActivity {
 
     //METODO PARA AGREGAR NOTICIAS (LADO DEL ADMINISTRADOR)
     public void InsertaNoticias(View view) {//RECIBE: variables String mediante EditText divididas en 3 campos || ENVIA: objeto Hash con los datos etiquetados
+        progressBar.setVisibility(View.VISIBLE);
         //SE LLAMA A LOS EDITTEXT DECLARADOS EN EL ENTORNO GLOBAL PARA EXTRAER LOS DATOS INGRESADOS
         titulo = etTitulo.getText().toString();
         Mensaje = Cuerpo.getText().toString();
@@ -250,11 +264,13 @@ public class panelControl extends AppCompatActivity {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(panelControl.this, "¡NOTA!: SE HA PUBLICADO CORRECTAMENTE", Toast.LENGTH_LONG).show();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(panelControl.this, "¡ADVERTENCIA!: Revise los datos, ERROR: " + error.getMessage() + ".", Toast.LENGTH_LONG).show();
                 }
             }) {
@@ -277,7 +293,7 @@ public class panelControl extends AppCompatActivity {
     //LIMPIA VARIABLES Y REINICIA PANTALLAS PARA LLEVAR AL USUARIO DE NUEVO AL INICIO DE SESION
     public void CierraSesionAdmin(View view){
         objL.tipoA ="";
-
+        progressBar.setVisibility(View.GONE);
         Toast.makeText(panelControl.this, "CERRANDO SESION...\nHASTA LUEGO", Toast.LENGTH_LONG).show();
         finish();
         startActivity(getIntent());

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,19 +10,14 @@
         android:layout_width="242dp"
         android:layout_height="34dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="102dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="67dp"
-        android:layout_marginBottom="625dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="68dp"
         android:text="Actualiza tus datos:"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.81"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTituloEnc" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvSubtituloe2"
@@ -31,12 +26,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="242dp"
-        android:layout_marginBottom="556dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
         android:text="°Altura (mts)"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvSubtituloe4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSubtituloe3" />
 
@@ -47,30 +40,24 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="109dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="408dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="308dp"
         android:text="°Tipo de sangre"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubtituloe2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvSubtituloe3"
         android:layout_width="146dp"
         android:layout_height="35dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="202dp"
-        android:layout_marginEnd="242dp"
-        android:layout_marginBottom="494dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="128dp"
         android:text="°Peso (kg)"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvSubtituloe2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,15 +66,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="39dp"
-        android:layout_marginEnd="123dp"
-        android:layout_marginBottom="673dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="28dp"
         android:text="INFORMACION IMPORTANTE"
-        app:layout_constraintBottom_toTopOf="@+id/tvSubtituloe"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,52 +81,44 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="192dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="87dp"
-        android:layout_marginBottom="489dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="Peso"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/tvSubtituloe2"
-        app:layout_constraintStart_toEndOf="@+id/tvSubtituloe3"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubtituloe"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etAlturaEnc"
         android:layout_width="132dp"
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="190dp"
-        android:layout_marginTop="134dp"
-        android:layout_marginEnd="88dp"
-        android:layout_marginBottom="549dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="192dp"
         android:ems="10"
         android:hint="Altura"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/tvSubtituloe2"
-        app:layout_constraintTop_toBottomOf="@+id/etPesoEnc" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btAceptaEnc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="385dp"
-        android:layout_marginEnd="180dp"
-        android:layout_marginBottom="298dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="172dp"
 
+        android:layout_marginBottom="268dp"
         android:text="Aceptar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAlturaEnc"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/etSangre"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/etSangre"
@@ -152,18 +127,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="125dp"
-        android:layout_marginEnd="113dp"
-        android:layout_marginBottom="370dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginEnd="44dp"
         android:ems="10"
         android:hint="O+,O-,A+,A-, etc..."
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvSubtituloe4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSubtituloe2"
-        app:layout_constraintVertical_bias="0.412" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

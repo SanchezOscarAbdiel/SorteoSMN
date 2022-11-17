@@ -11,65 +11,55 @@
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="181dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="172dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="452dp"
         android:text="INFORMACION IMPORTANTE"
-        app:layout_constraintBottom_toTopOf="@+id/TvSubtitulo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/TvSubtitulo"
         android:layout_width="249dp"
         android:layout_height="42dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="117dp"
-        android:layout_marginBottom="9dp"
+        android:layout_marginBottom="300dp"
         android:text="Si eres reserva, deberás ingresar: °Numero telefonico"
-        app:layout_constraintBottom_toTopOf="@+id/etCelular"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnAceptar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="126dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginBottom="196dp"
         android:text="ACEPTAR"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCelular" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/etCelular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="376dp"
         android:ems="10"
         android:hint="Numero de telefono."
         android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv"
-        app:layout_constraintTop_toBottomOf="@+id/TvSubtitulo" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="384dp"
         android:text="+52"
-        app:layout_constraintEnd_toStartOf="@+id/etCelular"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TvSubtitulo" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

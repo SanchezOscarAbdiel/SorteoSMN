@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -50,6 +51,7 @@ public class Registro extends AppCompatActivity {
     public Spinner Discapacidad;
     public RadioGroup Sexo;
     public RadioButton Masculino, Femenino;
+    public ProgressBar progressBar;
     public static EditText Nombre, ApellidoP, ApellidoM, Curp, Edad, NumEx, NumIn, Calle, Ciudad, Profesion, Correo, Resultado;
     public static String edad, nombre, apellidop, apellidom, curp, num_ext, num_int, calle, colonia, ciudad, estado_civ, profesion, sexo, discapacidad, correo;
     //VARIABLES DE ENTRONO GLOBAL
@@ -78,6 +80,8 @@ public class Registro extends AppCompatActivity {
         Profesion= (EditText)findViewById(R.id.etProfesion);
         Discapacidad= (Spinner) findViewById(R.id.spdiscapacidad);
         Correo= (EditText)findViewById(R.id.etCorreo);
+        progressBar = (ProgressBar) findViewById(R.id.PBregistro);
+        progressBar.setVisibility(View.GONE);
         //LLAMA LLENADO DE SPINNERS
         colonia(null);
         EstadoCivil(null);
@@ -130,6 +134,8 @@ public class Registro extends AppCompatActivity {
 
     //INSERCION EN BASE DE DATOS
     public void createUser(View view){ //RECIBE: caracteres String almacenados en campos EditText y Spinners || ENVIA: Objeto tipo HashMap con datos etiquetados hacia la BD
+        //INICIO DE PANTALLA DE CARGA
+        progressBar.setVisibility(View.VISIBLE);
         //SE LLAMA A LOS EDITTEXT DECLARADOS EN EL ENTORNO GLOBAL PARA EXTRAER LOS DATOS INGRESADOS
         nombre = Nombre.getText().toString();
         apellidop=ApellidoP.getText().toString();
@@ -158,12 +164,14 @@ public class Registro extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(Registro.this, "¡EXITO AL REALIZAR EL REGISTRO!, FELICIDADES", Toast.LENGTH_LONG).show();
                 readUser(null);//MANDA LLAMAR EL METODO ENCARGADO DE MUESTREO DE DATOS PARA EL USUARIO
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                // Toast.makeText(Registro.this, "¡ERROR AL REALIZAR EL REGISTRO!, PRUEBA DE NUEVO", Toast.LENGTH_LONG).show();
             }
         }) {
