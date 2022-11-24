@@ -63,7 +63,7 @@ public class panelControl extends AppCompatActivity {
     public void LeeNoticias(View view){
         progressBar.setVisibility(View.VISIBLE);
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
-        String URL = "http://"+IP+"/android/fetchnoticias.php";
+        String URL = "https://"+IP+"/19590323_SMN/fetchnoticias.php";
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -77,14 +77,16 @@ public class panelControl extends AppCompatActivity {
 
                         progressBar.setVisibility(View.GONE);
                     } catch (JSONException e) {
-                        Toast.makeText(panelControl.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
+                        Toast.makeText(panelControl.this, "¡ERROR!:\n NO HAY NOTICIAS AUN.", Toast.LENGTH_LONG).show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(panelControl.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
+                Toast.makeText(panelControl.this, "¡ERROR:\n NO HAY NOTICIAS AUN.", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
             }
         });
         requestQueue= Volley.newRequestQueue(this);
@@ -121,7 +123,7 @@ public class panelControl extends AppCompatActivity {
     public void LeeEncuadrado(String tipo){
         progressBar.setVisibility(View.VISIBLE);
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION, LLEVANDO COMO PARAMETRO EL TIPO DE ADSCRITO
-        String URL = "http://"+IP+"/android/fetchEncuadrado.php?tabla="+tipo;
+        String URL = "https://"+IP+"/19590323_SMN/fetchEncuadrado.php?tabla="+tipo;
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -156,7 +158,7 @@ public class panelControl extends AppCompatActivity {
         Cuerpo.setText("");
         etTitulo.setText("");
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
-        String URL = "http://"+IP+"/android/fetchFaltas.php";
+        String URL = "https://"+IP+"/19590323_SMN/fetchFaltas.php";
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -177,7 +179,8 @@ public class panelControl extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(panelControl.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+error.getMessage()+".", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(panelControl.this, "¡ERROR!: \n NO HAY NADA PARA MOSTRAR.", Toast.LENGTH_LONG).show();
             }
         });
         requestQueue = Volley.newRequestQueue(this);
@@ -219,11 +222,11 @@ public class panelControl extends AppCompatActivity {
         titulo.show();
     }
 
-    //METODO PARA HACER EFECTIBA LA BAJA MEDIANTE LA CONSULTA SQL CON LA MATRICULA RECOGIDA ANTERIORMENTE
+    //METODO PARA HACER EFECTIVA LA BAJA MEDIANTE LA CONSULTA SQL CON LA MATRICULA RECOGIDA ANTERIORMENTE
     private void updateBaja(String matricula) {//RECIBE: matricula del encuadrado (String mediante editText) || ENVIA: HashMap hacia script PHP para actualizacion de BD
         progressBar.setVisibility(View.VISIBLE);
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
-        String URL ="http://"+IP+"/android/editBaja.php";
+        String URL ="https://"+IP+"/19590323_SMN/editBaja.php";
         StringRequest stringRequest =new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -242,9 +245,14 @@ public class panelControl extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 // RECOGE TODOS LOS DATOS INGRESADOS Y LOS ENVIA A LA BASE DE DATOS ("variableDeBD", variableRecogida)
-                Map<String, String> params = new HashMap<>();
-                params.put("matricula", matricula);
-                return params;
+                if(matricula.length()>0){
+                    Map<String, String> params = new HashMap<>();
+                    params.put("matricula", matricula);
+                    return params;
+                }else{
+                    Toast.makeText(panelControl.this,"¡ERROR!: REVISE LA MATRICULA INGRESADA" ,Toast.LENGTH_LONG).show(); //MENSAJE DE ERROR
+                }
+                return null;
             }
         };
         requestQueue.add(stringRequest); //TOMA EL HASH MAP Y LO ENVIA AL SCRIPT
@@ -258,14 +266,17 @@ public class panelControl extends AppCompatActivity {
         Mensaje = Cuerpo.getText().toString();
         destinatario = destino.getText().toString();
         //EN EL destinatario SE RECOGE A QUIEN IRA ENVIADA LA NOTICIA CON 3 POSIBILIDADES: Encuadrado, Reserva o General
-        if(destinatario.equalsIgnoreCase("General") || destinatario.equalsIgnoreCase("Encuadrado") || destinatario.equalsIgnoreCase("Reserva")){
+        if( (destinatario.equalsIgnoreCase("General") || destinatario.equalsIgnoreCase("Encuadrado") || destinatario.equalsIgnoreCase("Reserva")) && titulo.length()>0 && Mensaje.length()>0 ){
             //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION, LLEVANDO COMO PARAMETROEL TITULO, CUERPO Y DESTINATARIO
-            String url = "http://"+IP+"/android/saveNoticias.php?titulo=" + titulo + "&cuerpo=" + Mensaje + "&destinatario=" + destinatario;
+            String url = "https://"+IP+"/19590323_SMN/saveNoticias.php?titulo=" + titulo + "&cuerpo=" + Mensaje + "&destinatario=" + destinatario;
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(panelControl.this, "¡NOTA!: SE HA PUBLICADO CORRECTAMENTE", Toast.LENGTH_LONG).show();
+                    Cuerpo.getText().clear();
+                    etTitulo.getText().clear();
+                    destino.getText().clear();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -287,7 +298,9 @@ public class panelControl extends AppCompatActivity {
             };
             requestQueue.add(stringRequest); //TOMA EL HASH MAP Y LO ENVIA AL SCRIPT
         }else{
-            Toast.makeText(panelControl.this,"¡ERROR!: Revise el destinatario" ,Toast.LENGTH_LONG).show();
+            progressBar.setVisibility(View.GONE);
+
+            Toast.makeText(panelControl.this,"¡ERROR!: LLENA TODOS LOS DATOS" ,Toast.LENGTH_LONG).show();
         }
     }
     //LIMPIA VARIABLES Y REINICIA PANTALLAS PARA LLEVAR AL USUARIO DE NUEVO AL INICIO DE SESION
@@ -301,6 +314,11 @@ public class panelControl extends AppCompatActivity {
         startActivity(v1);
     }
 
+    public void LimpiaPantalla(View view){
+        Cuerpo.getText().clear();
+        etTitulo.getText().clear();
+        destino.getText().clear();
+    }
     //EVITA QUE SE CIERRE LA APLICACION SIN EL METODO ADECUADO
     public void onBackPressed(){
         Toast.makeText(panelControl.this, "PARA CERRAR SESION \nTOQUE EL BOTON CORRESPONDIENTE", Toast.LENGTH_LONG).show();

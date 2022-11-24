@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6">
+        app:layout_constraintTop_toBottomOf="@+id/ImgPerfil">
 
         <Button
             android:id="@+id/bperfil"
@@ -116,11 +116,11 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="515dp"
-        android:layout_height="87dp"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="1dp"
-        android:layout_marginBottom="569dp"
+        android:layout_marginBottom="552dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintTop_toBottomOf="@+id/tvTipoP"
@@ -129,14 +129,14 @@
         tools:layout_editor_absoluteX="-98dp" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="79dp"
-        android:layout_height="74dp"
-        android:layout_alignBottom="@+id/imageView5"
+        android:id="@+id/ImgPerfil"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="281dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginEnd="272dp"
+        android:layout_marginBottom="571dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
         app:layout_constraintVertical_bias="1.0"
@@ -147,27 +147,27 @@
         android:id="@+id/tvTipoP2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView5"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="139dp"
+        android:layout_marginBottom="556dp"
         android:text="------------"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintStart_toEndOf="@+id/ImgPerfil"
         app:layout_constraintTop_toBottomOf="@+id/tvTipoP" />
 
     <TextView
         android:id="@+id/tvTipoP"
-        android:layout_width="wrap_content"
+        android:layout_width="253dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="166dp"
-        android:layout_marginBottom="622dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="588dp"
         android:text="------------"
         android:textSize="24sp" />
 
@@ -187,6 +187,7 @@
         android:foregroundTint="#FFFFFF"
         android:onClick="CierraSesion"
         android:tint="#FD0303"
+        app:backgroundTint="#7A9E35"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/binfoc"
         app:srcCompat="@android:drawable/ic_delete" />

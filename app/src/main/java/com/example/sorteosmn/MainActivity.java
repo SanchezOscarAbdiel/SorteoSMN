@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     //LLAMADA A LOS ELEMENTOS DE LA INTERFAZ DE LOGEO EN DONDE SE INTRODUCEN LOS DATOS
     Button Bperfil, Bescuadron, Bnoticias;
     FloatingActionButton btnCerrarSesion;
+    ImageView FotoPerfil;
     TextView Usuario, tipo;
 
     @Override
@@ -62,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
         botonEscuadron(null);
         Bnoticias = (Button) findViewById(R.id.bnoticias);
         botonNoticias(null);
+        FotoPerfil = (ImageView) findViewById(R.id.ImgPerfil);
+        if(objL.tipoA.equals("Encuadrado")){
+            FotoPerfil.setImageResource(R.drawable.militar);
+        }else{
+            FotoPerfil.setImageResource(R.drawable.reserva);
+        }
     }
 
     //METODO PARA LA RESOLUCION DE QUE PANTALLA MOSTRAR SEGUN EL LOGEO (ENCUADRADO/RESERVA O ADMINISTRADOR)
@@ -101,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     //METODO PARA CONSULTAR LA INFORMACION DEL ENCUADRADO O RESERVA EN EL PERFIL
     public void consultaUsuario(String xd) {
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION, LLEVANDO COMO PARAMETRO LA MATRICULA
-        String URL = "http://"+IP+"/android/fetchMainA.php?matricula=" + objL.Matricula;
+        String URL = "https://"+IP+"/19590323_SMN/fetchMainA.php?matricula=" + objL.Matricula;
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -186,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         //TRAER LOS DATOS DEL ESCUADRON DEL ENCUADRADO (TABLA ESCUADRON)
     public void consultaEscuadronE(String xd){
         //LLAMADA AL METODO SQL PARA HACER LA CONSULTA ADECUADA LLEVANDO COMO PARAMETRO LA MATRICULA DEL ENCUADRADO
-        String URL = "http://"+IP+"/android/fetchMainAescuadron.php?matricula=" + objL.Matricula;
+        String URL = "https://"+IP+"/19590323_SMN/fetchMainAescuadron.php?matricula=" + objL.Matricula;
         //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -224,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
         //TRAER LOS DATOS DEL NUMERO DE LIBERACION DE LA CARTILLA (TABLA CARTILLA)
     public void consultaEscuadronE2(String xd) {
         //LLAMADA AL METODO SQL PARA HACER LA CONSULTA ADECUADA LLEVANDO COMO PARAMETRO LA MATRICULA DEL ENCUADRADO
-        String URL = "http://"+IP+"/android/fetchMainAescuadron2.php?matricula=" + objL.Matricula;
+        String URL = "https://"+IP+"/19590323_SMN/fetchMainAescuadron2.php?matricula=" + objL.Matricula;
         //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -252,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
         //TRAER LOS DATOS DEL INSTRUCTOR SEGUN EL ESCUADRON (TABLA INSTRUCTOR)
     public void consultaEscuadronE3(String xd){
         //LLAMADA AL METODO SQL PARA HACER LA CONSULTA ADECUADA LLEVANDO COMO PARAMETRO LA PLACA DEL INSTRUCTOR
-        String URL = "http://"+IP+"/android/fetchMainAescuadron3.php?placa=" + Num_Placa;
+        String URL = "https://"+IP+"/19590323_SMN/fetchMainAescuadron3.php?placa=" + Num_Placa;
         //INICIA EL TRATAMIENTO DE LOS DATOS MEDIANTE LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -331,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
     //METODO PARA MOSTRAR LOS ANUNCIOS/NOTICIAS EN BASE DE SER UN ENCUADRADO/RESERVA
     public void LeeEncuadrado(String xd) {
         //LLAMADO AL METODO SQL PARA HACER LA SELECCION DE LAS NOTICIAS
-        String URL = "http://"+IP+"/android/fetchNoticiasE.php?tipoA=" + objL.tipoA;
+        String URL = "https://"+IP+"/19590323_SMN/fetchNoticiasE.php?tipoA=" + objL.tipoA;
         //INICIA EL TRATAMIENTO DE LA INFORAMCION CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override

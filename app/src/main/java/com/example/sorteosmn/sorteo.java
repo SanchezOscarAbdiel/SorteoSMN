@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class sorteo extends AppCompatActivity {
-    public static String IP ="192.168.100.246";
+    public static String IP ="19590323.tecsanjuan.com";
 
     //LLAMADA GENERAL A SQL
     RequestQueue requestQueue;
@@ -156,7 +156,7 @@ public class sorteo extends AppCompatActivity {
     //SI LOS DATOS DE POPUP ENCUADRADO SON CORRECTOS, EN ESTE METODO SE MANDA A LLAMAR AL LLENADO EN LA BASE DE DATOS
     public void updateUserE(){//RECIBE: datos String y Float recogidos de campos EditText para actualizar encuadrado || ENVIA: Mapa HashMap hacia el script PHP para guardado en BD
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
-        String URL = "http://"+IP+"/android/editE.php";
+        String URL = "https://"+IP+"/19590323_SMN/editE.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() { //PREPARA LOS DATOS PARA REDIRECCIONAMIENTO A SCRIPT
             @Override
             public void onResponse(String response) {
@@ -186,7 +186,7 @@ public class sorteo extends AppCompatActivity {
     //RECIBE: datos String y Float recogidos de campos EditText para actualizar reserva || ENVIA: Mapa HashMap hacia el script PHP para guardado en BD
     private void updateUser(String xd) {
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION
-        String URL = "http://"+IP+"/android/edit.php";
+        String URL = "https://"+IP+"/19590323_SMN/edit.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {//PREPARA LOS DATOS PARA REDIRECCIONAMIENTO A SCRIPT
             @Override
             public void onResponse(String response) {
@@ -213,7 +213,7 @@ public class sorteo extends AppCompatActivity {
     //RECOGE LOS DATOS DE LA BASE DE DATOS PARA SU MUESTREO PARA MOSTRAR LOS RESULTADOS EN CASO DE SER ENCUADRADO O RESERVA
     public void readUser1 (String xd) {//RECIBE: Matricula del usuario que inició sesion (String) || ENVIA: conjunto de datos producto de una consulta SQL
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION LLEVANDO COMO PARAMETRO LA CURP
-        String URL = "http://"+IP+"/android/fetchsorteo.php?curp=" + objR.EnviaCurp;
+        String URL = "https://"+IP+"/19590323_SMN/fetchsorteo.php?curp=" + objR.EnviaCurp;
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
@@ -258,7 +258,7 @@ public class sorteo extends AppCompatActivity {
     //METODO PARA OBTENER LA MATRICULA DEL ADSCRITO Y GUARDAR EL DATO
     public void readUser2 (String mat) {
         //LLAMADA AL METODO SQL PARA PARA OBTENER LA INFORMACION}
-        String URL = "http://"+IP+"/android/fetchsorteo2.php?matricula=" + mat;
+        String URL = "https://"+IP+"/19590323_SMN/fetchsorteo2.php?matricula=" + mat;
         //INICIA EL TRATAMIENTO DE LOS DATOS CON LOS OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override

@@ -7,7 +7,7 @@
     android:background="@color/black"
     tools:context=".panelControl">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="415dp"
         android:layout_height="729dp"
         android:layout_marginTop="1dp"
@@ -18,12 +18,136 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <RelativeLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="378dp"
+            android:layout_height="313dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="38dp"
+            android:background="@drawable/fondo_edditext"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/button13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="19dp"
+                android:layout_marginBottom="7dp"
+                android:backgroundTint="#7A9F35"
+                android:onClick="InsertaNoticias"
+                android:text="Publicar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btnLimpiar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="247dp"
+                android:layout_marginBottom="4dp"
+                android:backgroundTint="#7A9F35"
+                android:onClick="LimpiaPantalla"
+                android:text="LIMPIAR"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </RelativeLayout>
+
+        <TableLayout
+            android:layout_width="321dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/constraintLayout4"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="102dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="273dp"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/edTituloN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/eddit_blanco"
+                    android:baselineAligned="false"
+                    android:ems="10"
+                    android:hint="TITULO"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textColorHint="#000000" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/ed"
+                    android:layout_width="270dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/eddit_blanco"
+                    android:hint="                      NOTICIA"
+                    android:inputType="text|textMultiLine|textCapSentences"
+                    android:maxLength="400"
+                    android:singleLine="false"
+                    android:textColor="#000000"
+                    android:textColorHint="#000000"
+                    android:verticalScrollbarPosition="left" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="46dp">
+
+                <EditText
+                    android:id="@+id/edDestinatario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/eddit_blanco"
+                    android:ems="10"
+                    android:hint="General,Encuadrado,Reserva"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textColorHint="#292626" />
+
+            </TableRow>
+
+        </TableLayout>
+
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="155dp"
             android:layout_height="276dp"
-            android:layout_marginTop="31dp"
+            android:layout_alignParentTop="true"
 
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="67dp"
+            android:layout_marginEnd="35dp"
             android:layout_marginBottom="5dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
@@ -71,131 +195,24 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:onClick="CierraSesionAdmin"
+                app:backgroundTint="#7A9E35"
                 app:srcCompat="@android:drawable/ic_delete" />
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout4"
-            android:layout_width="362dp"
-            android:layout_height="307dp"
-            android:layout_marginStart="26dp"
-            android:layout_marginEnd="27dp"
-            android:layout_marginBottom="40dp"
-            android:background="@drawable/fondo_edditext"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TableLayout
-                android:layout_width="352dp"
-                android:layout_height="226dp"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="21dp"
-                android:layout_marginEnd="7dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView26"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Titulo:"
-                        android:textColor="#020202" />
-
-                    <EditText
-                        android:id="@+id/edTituloN"
-                        android:layout_width="270dp"
-                        android:layout_height="35dp"
-                        android:background="@drawable/eddit_blanco"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:textColor="#000000" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView31"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Descripción:"
-                        android:textColor="#020202" />
-
-                    <EditText
-                        android:id="@+id/ed"
-                        android:layout_width="270dp"
-                        android:layout_height="150dp"
-                        android:background="@drawable/eddit_blanco"
-                        android:inputType="text|textMultiLine|textCapSentences"
-                        android:maxLength="400"
-                        android:singleLine="false"
-                        android:textColor="#000000"
-                        android:verticalScrollbarPosition="left" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView33"
-                        android:layout_width="wrap_content"
-                        android:layout_height="57dp"
-                        android:text="Destinatario"
-                        android:textColor="#020202" />
-
-                    <EditText
-                        android:id="@+id/edDestinatario"
-                        android:layout_width="270dp"
-                        android:layout_height="39dp"
-                        android:background="@drawable/eddit_blanco"
-                        android:ems="10"
-                        android:hint="General,Encuadrado,Reserva"
-                        android:inputType="textPersonName"
-                        android:textAlignment="center"
-                        android:textColor="#000000"
-                        android:textColorHint="#292626" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </TableLayout>
-
-            <Button
-                android:id="@+id/button13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="#7A9F35"
-                android:onClick="InsertaNoticias"
-                android:text="Publicar"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <EditText
             android:id="@+id/edadmin"
-            android:layout_width="171dp"
-            android:layout_height="42dp"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="31dp"
+            android:layout_width="200dp"
+            android:layout_height="44dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="21dp"
+
+            android:layout_marginTop="115dp"
+            android:layout_marginEnd="190dp"
             android:layout_marginBottom="21dp"
             android:background="@drawable/eddit_blanco"
-
             android:drawableStart="@drawable/usuario__3_"
             android:ems="10"
             android:inputType="textPersonName"
@@ -209,11 +226,14 @@
 
         <TextView
             android:id="@+id/textView35"
-            android:layout_width="wrap_content"
+            android:layout_width="275dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="74dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="74dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="99dp"
             android:text="𝗣𝗮𝗻𝗲𝗹 𝗱𝗲 𝗖𝗼𝗻𝘁𝗿𝗼𝗹"
             android:textColor="#355000"
             android:textSize="34sp"
@@ -225,9 +245,14 @@
             android:id="@+id/imageView3"
             android:layout_width="183dp"
             android:layout_height="172dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginStart="31dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="48dp"
+            android:layout_marginTop="177dp"
+            android:layout_marginEnd="206dp"
+            android:layout_marginBottom="380dp"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
             app:layout_constraintStart_toStartOf="parent"
@@ -238,11 +263,18 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="91dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="300dp"
-            android:layout_marginEnd="16dp"
+            android:layout_alignTop="@+id/linearLayout3"
+            android:layout_alignEnd="@+id/linearLayout3"
+            android:layout_alignBottom="@+id/linearLayout3"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="28dp"
+            android:indeterminateTint="#7A9E35"
+            android:progressBackgroundTint="#7A9E35"
+            android:progressTint="#7A9E35"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

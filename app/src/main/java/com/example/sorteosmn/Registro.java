@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -24,6 +25,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +47,7 @@ public class Registro extends AppCompatActivity {
 
     //LLAMADA GENERAL A SQL
     RequestQueue requestQueue;
-    public static final String url = "http://"+IP+"/android/save.php";
+    public static final String url = "https://"+IP+"/19590323_SMN/save.php";
     //ELEMENTOS DE INTERFAZ PARA LA CAPTURA DE DATOS
     public Spinner spinner;
     public Spinner spEstadoc;
@@ -54,6 +57,7 @@ public class Registro extends AppCompatActivity {
     public ProgressBar progressBar;
     public static EditText Nombre, ApellidoP, ApellidoM, Curp, Edad, NumEx, NumIn, Calle, Ciudad, Profesion, Correo, Resultado;
     public static String edad, nombre, apellidop, apellidom, curp, num_ext, num_int, calle, colonia, ciudad, estado_civ, profesion, sexo, discapacidad, correo;
+    public FloatingActionButton enviaDatos;
     //VARIABLES DE ENTRONO GLOBAL
     public static int Sexo1;
     public static String EnviaCurp, EnviaMatricula, EnviaBola;
@@ -80,6 +84,7 @@ public class Registro extends AppCompatActivity {
         Profesion= (EditText)findViewById(R.id.etProfesion);
         Discapacidad= (Spinner) findViewById(R.id.spdiscapacidad);
         Correo= (EditText)findViewById(R.id.etCorreo);
+        enviaDatos = (FloatingActionButton)findViewById(R.id.bRegistro);
         progressBar = (ProgressBar) findViewById(R.id.PBregistro);
         progressBar.setVisibility(View.GONE);
         //LLAMA LLENADO DE SPINNERS
@@ -136,6 +141,7 @@ public class Registro extends AppCompatActivity {
     public void createUser(View view){ //RECIBE: caracteres String almacenados en campos EditText y Spinners || ENVIA: Objeto tipo HashMap con datos etiquetados hacia la BD
         //INICIO DE PANTALLA DE CARGA
         progressBar.setVisibility(View.VISIBLE);
+
         //SE LLAMA A LOS EDITTEXT DECLARADOS EN EL ENTORNO GLOBAL PARA EXTRAER LOS DATOS INGRESADOS
         nombre = Nombre.getText().toString();
         apellidop=ApellidoP.getText().toString();
@@ -179,22 +185,26 @@ public class Registro extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>(); // RECOGE TODOS LOS DATOS INGRESADOS Y LOS ENVIA A LA BASE DE DATOS ("variableDeBD", variableRecogida)
-                params.put("nombre", nombre);
-                params.put("apellidop", apellidop);
-                params.put("apellidom", apellidom);
-                params.put("curp", curp);
-                params.put("edad", edad);
-                params.put("num_ext", num_ext);
-                params.put("num_int", num_int);
-                params.put("calle", calle);
-                params.put("colonia", colonia);
-                params.put("ciudad", ciudad);
-                params.put("estado_civ", estado_civ);
-                params.put("profesion", profesion);
-                params.put("sexo", sexo);
-                params.put("discapacidad", discapacidad);
-                params.put("correo", correo);
-                return params;
+
+                    params.put("nombre", nombre);
+                    params.put("apellidop", apellidop);
+                    params.put("apellidom", apellidom);
+                    params.put("curp", curp);
+                    params.put("edad", edad);
+                    params.put("num_ext", num_ext);
+                    params.put("num_int", num_int);
+                    params.put("calle", calle);
+                    params.put("colonia", colonia);
+                    params.put("ciudad", ciudad);
+                    params.put("estado_civ", estado_civ);
+                    params.put("profesion", profesion);
+                    params.put("sexo", sexo);
+                    params.put("discapacidad", discapacidad);
+                    params.put("correo", correo);
+                    return params;
+
+
+
             }
         };
         requestQueue.add(stringRequest); //MANDA LLAMAR A LA BD
@@ -221,7 +231,7 @@ public class Registro extends AppCompatActivity {
     private void readUser(String xd) { //RECIBE: curp del Aspirante mediante un String recogido de la clase sorteo; objeto JSON con datos recibidos de MYSQL
                                       // ENVIA: objeto HASH hacia la BD
         //SE ESTABLECE LA CONEXION CON LA BASE DE DATOS PARA LA RECOGIDA DE LOS DATOS Y SE PASA COMO PARAMETRO LA CURP DEL ASPIRANTE
-        String URL = "http://"+IP+"/android/fetch1.php?curp=" + curp;
+        String URL = "https://"+IP+"/19590323_SMN/fetch1.php?curp=" + curp;
         //EN ESTE METODO SE CAPTURAN LOS RESULTADOS DE LA CONULTA ANTERIOR Y SE TRATA LA INFORMACION CON OBJETOS JSON
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
