@@ -17,11 +17,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 //IMPORT: ELEMENTOS PARA EL TRATAMIENTO DE DATOS EN LA APLICACIÓN CON FORMATO JSON (ARRAY DE ELEMENTOS)
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 //MENU PRINCIPAL DE LA APLICACION (DONDE SE UBICAN LOS BOTONES PRINCIPALES)
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     //LLAMADA A LOS ELEMENTOS DE LA INTERFAZ DE LOGEO EN DONDE SE INTRODUCEN LOS DATOS
     Button Bperfil, Bescuadron, Bnoticias;
     FloatingActionButton btnCerrarSesion;
+    ImageSlider imageSlider;
+    ArrayList<SlideModel> slideModels = new ArrayList<>();
     ImageView FotoPerfil;
     TextView Usuario, tipo;
 
@@ -49,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         //LLAMADA UNIVERSAL A PHP
         requestQueue = Volley.newRequestQueue(this);
         //RECOGIDA DE DATOS DE LOS ELEMENTOS DE LA INTERFAZ EN VARIABLES
+        imageSlider = (ImageSlider) findViewById(R.id.imageSlider);
+
         Usuario = (TextView) findViewById(R.id.tvTipoP);
         tipo = (TextView) findViewById(R.id.tvTipoP2);
         Usuario.setText(objL.Correo);
@@ -352,17 +361,18 @@ public class MainActivity extends AppCompatActivity {
                         acumulaCuerpo = jsonObject.getString("cuerpo") + "\n";
                         acumulaDestino = jsonObject.getString("destinatario") + "\n";
                         //AL ESTAR X=0 NO ACUMULA EL PRIMER "TOTAL" EVITANDO LA IMPRESION DE UN NULL
-                        if(x==0){
-                        total = acumulaTitulo + acumulaCuerpo + acumulaDestino + "\n";
-                        }else if(x>0){
-                            total = total + acumulaTitulo + acumulaCuerpo + acumulaDestino + "\n";
-                        }
+
+                        total = acumulaTitulo + acumulaCuerpo + acumulaDestino;
+                            slideModels.add(new SlideModel("https://th.bing.com/th/id/R.434f78fbf01d479ad1f801f314aebb14?rik=JrbqrtrKUtIRZQ&riu=http%3a%2f%2fwww.azulejosdanimelo.com.br%2fuploads%2fimages%2f2017%2f08%2f43-verde-militar.jpg&ehk=M2XJ4xJybRxlgXtrPnJDhhHlUbfmgFfxMz57l4ziwA4%3d&risl=&pid=ImgRaw&r=0",total, ScaleTypes.FIT));
+
+
                     } catch (JSONException e) {
                         Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
                 //TOMA TODAS LAS NOTICIAS ACUMULADAS Y LAS MANDA A UN POPUP PARA SU IMPRESION
-                popUpNoticias(total);
+             //   popUpNoticias(total);
+                imageSlider.setImageList(slideModels, ScaleTypes.FIT);
             }
         }, new Response.ErrorListener() {
             @Override
