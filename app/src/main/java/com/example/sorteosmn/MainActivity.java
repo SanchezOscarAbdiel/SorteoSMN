@@ -110,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
         Bnoticias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "ACTUALIZANDO NOTICIAS...", Toast.LENGTH_LONG).show();
+                slideModels.clear();
                 LeeEncuadrado(null);
             }
         });
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         Correo = (jsonObject.getString("Correo_Enc"));
                         enseña = 1;
                     } catch (JSONException e) {
-                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                     try {
                         //PARA TRAER LA INFORMACION DEL RESERVA
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                         Num_Tel = (jsonObject.getString("Num_Tel"));
                         enseña = 2;
                     } catch (JSONException e) {
-                        Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
+               //         Toast.makeText(MainActivity.this, "¡ADVERTENCIA!: Revise los datos, ERROR: "+e.getMessage()+".", Toast.LENGTH_LONG).show();
                     }
                 }
             }
